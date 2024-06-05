@@ -1,0 +1,13 @@
+.header-container {
+	display: flex;
+	justify-content: space-between;
+	background: transparent;
+}
+
+.search-placeholder {
+	color: #ffff;
+}
+
+.user-area {
+	align-items: end;
+}
