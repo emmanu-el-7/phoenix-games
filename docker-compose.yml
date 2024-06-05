@@ -19,7 +19,7 @@ services:
     command: ['npm', 'start']
 
   frontend:
-    build: ./frontend
+    build: ./frontend/phoenix-games
     ports:
       - '3000:3000'
     environment:

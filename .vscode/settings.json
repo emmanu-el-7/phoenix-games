@@ -1,0 +1,5 @@
+{
+	"remote.SSH.remoteServerListenOnSocket": true,
+	"terminal.integrated.defaultProfile.linux": "bash",
+	"terminal.integrated.enableImages": true
+}
