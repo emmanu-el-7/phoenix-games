@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_DB=phoenix
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=33696549
+      - POSTGRES_HOST=db
+    volumes:
+      - ./backend:/phoenix-games
+    depends_on:
+      db:
+        condition: service_healthy
+    command: ['npm', 'start']
+
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost:3001/api
+    volumes:
+      - ./frontend:/phoenix-games
+    command: ['npm', 'start']
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: phoenix
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 33696549
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U admin -d phoenix']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:

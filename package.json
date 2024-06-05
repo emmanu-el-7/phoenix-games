@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "@hapi/hapi": "^21.3.9",
+    "@hapi/inert": "^7.1.0",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "hapi-cors": "^1.0.3",
+    "knex": "^3.1.0",
+    "path": "^0.12.7",
+    "react-router-dom": "^6.23.1",
+    "swiper": "^11.1.4"
+  }
+}
