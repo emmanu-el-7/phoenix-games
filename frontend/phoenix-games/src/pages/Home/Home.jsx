@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import './home.css';
 import ProductsContainer from '../../components/Menu/ProductsContainer';

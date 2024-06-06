@@ -9,7 +9,7 @@ function SideMenu({ active }) {
 	return (
 		<div className={`sideMenu ${active ? 'active' : undefined}`}>
 			<a href='#' className='logo'>
-				<i class='bi bi-controller'></i>
+				<i className='bi bi-controller'></i>
 				<span className='brand'>Phoenix</span>
 			</a>
 			<ul className='nav'>

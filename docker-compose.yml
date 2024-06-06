@@ -26,9 +26,9 @@ services:
       - NODE_ENV=development
       - REACT_APP_API_URL=http://localhost:3001/api
       - CHOKIDAR_USEPOLLING=true
-
     volumes:
       - ./frontend/phoenix-games:/phoenix-games
+      - /phoenix-games/node_modules
     command: ['npm', 'start']
 
   db:
