@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
 	return (
 		<div className='card-container'>
 			<CardMedia className='product-media' title={product.name}>
-				<img src={product.image} />
+				<img src={product.image} alt={`${product.name} image`} />
 			</CardMedia>
 			<CardContent className='product-feature'>
 				<div className='product-title-wrapper'>

@@ -22,13 +22,13 @@ const ProductCarousel = ({ products }) => {
 					/>
 
 					<CardContent className='content'>
-						<Typography variant='h5' component='h2'>
+						<Typography variant='h5' component='h2' color={'white'}>
 							{product.name}
 						</Typography>
 						<div className='buttons'>
 							<Button
 								variant='contained'
-								color='primary'
+								color={'secondary'}
 								href={`/product/${product.id}`}
 								aria-label={`Buy ${product.name}`}
 							>
