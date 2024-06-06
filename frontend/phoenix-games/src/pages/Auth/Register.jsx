@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../slices/authSlice';
-import { Link } from '@reach/router';
+import { NavLink } from 'react-router-dom';
+import Message from '../../components/Message/Message';
 
 const Register = () => {
 	const [customer, setcustomer] = useState({
@@ -69,7 +70,7 @@ const Register = () => {
 				{error && <Message msg={error} type='error' />}
 			</form>
 			<p>
-				Já possui cadastro? <Link to='/login'>Clique aqui</Link>
+				Já possui cadastro? <NavLink to='/login'>Clique aqui</NavLink>
 			</p>
 		</div>
 	);

@@ -1,6 +1,4 @@
-import React from 'react';
-import { Router } from '@reach/router';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Main from './pages/Home/Main';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
@@ -8,9 +6,11 @@ import Register from './pages/Auth/Register';
 function App() {
 	return (
 		<Router>
-			<Main path='/' />
-			<Login path='/login' />
-			<Register path='/register' />
+			<Routes>
+				<Route path='/' element={<Main />} />
+				<Route path='/login' element={<Login />} />
+				<Route path='/register' element={<Register />} />
+			</Routes>
 		</Router>
 	);
 }

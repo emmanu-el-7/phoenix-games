@@ -6,7 +6,7 @@ import {
 	CardContent,
 	Typography,
 } from '@mui/material';
-
+import PropTypes from 'prop-types';
 import Carousel from 'react-material-ui-carousel';
 import './productCarousel.css';
 
@@ -14,11 +14,11 @@ const ProductCarousel = ({ products }) => {
 	return (
 		<Carousel>
 			{products.map((product, index) => (
-				<Card key={index} className='productSlider'>
+				<Card key={product.id} className='productSlider'>
 					<CardMedia
 						component='img'
 						image={product.image}
-						alt='Product Image'
+						alt={`${product.name} Image`}
 					/>
 
 					<CardContent className='content'>
@@ -26,7 +26,12 @@ const ProductCarousel = ({ products }) => {
 							{product.name}
 						</Typography>
 						<div className='buttons'>
-							<Button variant='contained' color='primary' href='/product'>
+							<Button
+								variant='contained'
+								color='primary'
+								href={`/product/${product.id}`}
+								aria-label={`Buy ${product.name}`}
+							>
 								Compre já!
 							</Button>
 						</div>
@@ -35,6 +40,16 @@ const ProductCarousel = ({ products }) => {
 			))}
 		</Carousel>
 	);
+};
+
+ProductCarousel.propTypes = {
+	products: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.number.isRequired,
+			name: PropTypes.string.isRequired,
+			image: PropTypes.string.isRequired,
+		})
+	).isRequired,
 };
 
 export default ProductCarousel;

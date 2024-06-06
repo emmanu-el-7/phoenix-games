@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../slices/authSlice';
-import { Link } from '@reach/router';
+import { NavLink } from 'react-router-dom';
+import Message from '../../components/Message/Message';
 
 const Login = () => {
 	const [customer, setcustomer] = useState({
@@ -50,7 +51,7 @@ const Login = () => {
 				{loading && <input type='submit' value='Aguarde...' disabled />}
 				{error && <Message msg={error} type='error' />}
 				<p>
-					Não possui cadastro? <Link to='/register'>Clique aqui</Link>
+					Não possui cadastro? <NavLink to='/register'>Clique aqui</NavLink>
 				</p>
 			</form>
 		</div>

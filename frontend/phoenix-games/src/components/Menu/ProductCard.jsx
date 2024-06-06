@@ -6,6 +6,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import './productCard.css';
+import PropTypes from 'prop-types';
 
 const ProductCard = ({ product }) => {
 	return (
@@ -33,6 +34,14 @@ const ProductCard = ({ product }) => {
 			</div>
 		</div>
 	);
+};
+
+ProductCard.propTypes = {
+	product: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		image: PropTypes.string.isRequired,
+		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	}),
 };
 
 export default ProductCard;

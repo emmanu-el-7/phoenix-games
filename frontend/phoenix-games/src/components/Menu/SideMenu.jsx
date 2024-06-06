@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import './sideMenu.css';
 import navListData from '../../data/navListData';
 import NavListItem from './NavListItem';
+import PropTypes from 'prop-types';
 
 function SideMenu({ active }) {
 	const [navData, setNavdata] = useState(navListData);
 
 	return (
-		<div className={`sideMenu ${active ? 'active' : undefined}`}>
+		<div className={`sideMenu ${active ? 'active' : ''}`}>
 			<a href='#' className='logo'>
 				<i className='bi bi-controller'></i>
 				<span className='brand'>Phoenix</span>
@@ -42,5 +43,9 @@ function SideMenu({ active }) {
 		</div>
 	);
 }
+
+SideMenu.propTypes = {
+	active: PropTypes.bool.isRequired,
+};
 
 export default SideMenu;
