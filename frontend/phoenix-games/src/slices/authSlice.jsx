@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import {
+	createContext,
+	useContext,
+	useState,
+	useEffect,
+	useCallback,
+} from 'react';
 import authService from '../services/authService';
 import PropTypes from 'prop-types';
 
@@ -12,65 +18,63 @@ export const AuthProvider = ({ children }) => {
 	const [customer, setCustomer] = useState(
 		JSON.parse(localStorage.getItem('customer')) || null
 	);
-	const [error, setError] = useState(false);
-	const [success, setSuccess] = useState(false);
+	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		localStorage.setItem('customer', JSON.stringify(customer));
 	}, [customer]);
 
-	const register = async (customerData) => {
+	const register = useCallback(async (customerData) => {
 		setLoading(true);
-		setError(false);
+		setError(null);
 		try {
 			const data = await authService.register(customerData);
 			if (!data.errors) {
 				setCustomer(data);
-				setSuccess(true);
-				setLoading(false);
 			}
 		} catch (err) {
 			console.error(err);
+			setError(err.message || 'Registration failed');
+		} finally {
 			setLoading(false);
-			setError(true);
 		}
-	};
+	}, []);
 
-	const logout = async () => {
+	const logout = useCallback(async () => {
 		setLoading(true);
+		setError(null);
 		try {
 			await authService.logout();
 			setCustomer(null);
-			setSuccess(true);
-			setLoading(false);
+			localStorage.removeItem('customer');
 		} catch (err) {
 			console.error(err);
+			setError(err.message || 'Logout failed');
+		} finally {
 			setLoading(false);
-			setError(true);
 		}
-	};
+	}, []);
 
-	const login = async (customerData) => {
+	const login = useCallback(async (customerData) => {
 		setLoading(true);
-		setError(false);
+		setError(null);
 		try {
 			const data = await authService.login(customerData);
 			if (!data.errors) {
 				setCustomer(data);
-				setSuccess(true);
-				setLoading(false);
 			}
 		} catch (err) {
 			console.error(err);
+			setError(err.message || 'Login failed');
+		} finally {
 			setLoading(false);
-			setError(true);
 		}
-	};
+	}, []);
 
 	return (
 		<AuthContext.Provider
-			value={{ customer, loading, error, success, register, logout, login }}
+			value={{ customer, loading, error, register, logout, login }}
 		>
 			{children}
 		</AuthContext.Provider>
@@ -80,3 +84,5 @@ export const AuthProvider = ({ children }) => {
 AuthProvider.propTypes = {
 	children: PropTypes.node.isRequired,
 };
+
+export default AuthProvider;

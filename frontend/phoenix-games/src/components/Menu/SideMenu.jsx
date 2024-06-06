@@ -1,46 +1,105 @@
 import React, { useState } from 'react';
-import './sideMenu.css';
+import {
+	Drawer,
+	List,
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+	IconButton,
+	Box,
+	Typography,
+} from '@mui/material';
+import {
+	Menu as MenuIcon,
+	Favorite as FavoriteIcon,
+	ShoppingBag as ShoppingBagIcon,
+	Home as HomeIcon,
+	Category as CategoryIcon,
+	Facebook as FacebookIcon,
+	Twitter as TwitterIcon,
+	YouTube as YouTubeIcon,
+	Share as ShareIcon,
+} from '@mui/icons-material';
 import navListData from '../../data/navListData';
-import NavListItem from './NavListItem';
 import PropTypes from 'prop-types';
+import './sideMenu.css';
+
+const iconMapping = {
+	'bi-house-door': <HomeIcon />,
+	'bi-window-stack': <CategoryIcon />,
+	'bi-heart': <FavoriteIcon />,
+	'bi-bag': <ShoppingBagIcon />,
+};
 
 function SideMenu({ active }) {
 	const [navData, setNavdata] = useState(navListData);
+	const [activeItem, setActiveItem] = useState(
+		navListData.find((item) => item.active)._id
+	);
+
+	const handleItemClick = (id) => {
+		setNavdata(
+			navData.map((item) => ({
+				...item,
+				active: item._id === id,
+			}))
+		);
+		setActiveItem(id);
+	};
 
 	return (
-		<div className={`sideMenu ${active ? 'active' : ''}`}>
-			<a href='#' className='logo'>
-				<i className='bi bi-controller'></i>
-				<span className='brand'>Phoenix</span>
-			</a>
-			<ul className='nav'>
-				{navData.map((item) => (
-					<NavListItem key={item._id} item={item} />
-				))}
-			</ul>
-			<ul className='social'>
-				<li>
-					<a href='#'>
-						<i className='bi bi-meta'></i>
-					</a>
-				</li>
-				<li>
-					<a href='#'>
-						<i className='bi bi-twitter-x'></i>
-					</a>
-				</li>
-				<li>
-					<a href='#'>
-						<i className='bi bi-youtube'></i>
-					</a>
-				</li>
-				<li>
-					<a href='#' className='share'>
-						<i className='bi bi-share'></i>
-					</a>
-				</li>
-			</ul>
-		</div>
+		<Drawer
+			variant='persistent'
+			open={active}
+			anchor='left'
+			sx={{ width: 240, flexShrink: 0 }}
+			className='side-menu'
+		>
+			<Box
+				sx={{
+					width: 240,
+					display: 'flex',
+					flexDirection: 'column',
+					height: '100%',
+				}}
+			>
+				<Box sx={{ display: 'flex', alignItems: 'center', padding: '16px' }}>
+					<MenuIcon />
+					<Typography variant='h6' noWrap sx={{ marginLeft: '16px' }}>
+						Phoenix
+					</Typography>
+				</Box>
+				<List>
+					{navData.map((item) => (
+						<ListItem
+							button
+							key={item._id}
+							selected={item._id === activeItem}
+							onClick={() => handleItemClick(item._id)}
+						>
+							<ListItemIcon>{iconMapping[item.icon]}</ListItemIcon>
+							<ListItemText primary={item.name} />
+						</ListItem>
+					))}
+				</List>
+				<Box sx={{ marginTop: 'auto', padding: '16px' }}>
+					<List sx={{ display: 'flex', justifyContent: 'space-around' }}>
+						<IconButton color='inherit' href='#'>
+							<FacebookIcon />
+						</IconButton>
+						<IconButton color='inherit' href='#'>
+							<TwitterIcon />
+						</IconButton>
+						<IconButton color='inherit' href='#'>
+							<YouTubeIcon />
+						</IconButton>
+						<IconButton color='inherit' href='#'>
+							<ShareIcon />
+						</IconButton>
+					</List>
+				</Box>
+			</Box>
+		</Drawer>
 	);
 }
 

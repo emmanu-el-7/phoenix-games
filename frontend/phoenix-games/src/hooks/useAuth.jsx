@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import authService from '../services/authService';
 
@@ -12,15 +13,14 @@ export const AuthProvider = ({ children }) => {
 		JSON.parse(localStorage.getItem('user')) || null
 	);
 	const [loading, setLoading] = useState(true);
-	const [auth, setAuth] = useState(false);
 
 	useEffect(() => {
-		const checkUserStatus = async () => {
+		const checkUserStatus = () => {
 			const userData = JSON.parse(localStorage.getItem('user'));
 			if (userData) {
-				setAuth(true);
+				setUser(userData);
 			} else {
-				setAuth(false);
+				setUser(null);
 			}
 			setLoading(false);
 		};
@@ -34,10 +34,10 @@ export const AuthProvider = ({ children }) => {
 			const data = await authService.login(credentials);
 			if (data.user) {
 				setUser(data.user);
-				setAuth(true);
+				localStorage.setItem('user', JSON.stringify(data.user));
 			}
 		} catch (error) {
-			console.error(error);
+			console.error('Login error:', error);
 		} finally {
 			setLoading(false);
 		}
@@ -48,16 +48,16 @@ export const AuthProvider = ({ children }) => {
 		try {
 			await authService.logout();
 			setUser(null);
-			setAuth(false);
+			localStorage.removeItem('user');
 		} catch (error) {
-			console.error(error);
+			console.error('Logout error:', error);
 		} finally {
 			setLoading(false);
 		}
 	};
 
 	return (
-		<AuthContext.Provider value={{ user, loading, auth, login, logout }}>
+		<AuthContext.Provider value={{ user, loading, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 	);

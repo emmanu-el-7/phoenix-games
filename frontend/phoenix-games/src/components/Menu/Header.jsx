@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	AppBar,
 	Avatar,
@@ -15,9 +15,25 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from '@mui/material/Link';
 import './header.css';
+import customerService from '../../services/customerService';
 
 const Header = ({ toggleActive }) => {
 	const [searchTerm, setSearchTerm] = useState('');
+	const [customer, setCustomer] = useState(null);
+
+	useEffect(() => {
+		// Supondo que o customerService tenha um método para obter os detalhes do usuário
+		const fetchCustomerDetails = async () => {
+			try {
+				const data = await customerService.getCustomerDetails();
+				setCustomer(data);
+			} catch (error) {
+				console.error('Failed to fetch customer details:', error);
+			}
+		};
+
+		fetchCustomerDetails();
+	}, []);
 
 	const handleSearchChange = (event) => {
 		setSearchTerm(event.target.value);
@@ -34,7 +50,7 @@ const Header = ({ toggleActive }) => {
 				>
 					<MenuIcon />
 				</IconButton>
-				<div>
+				<div className='search-container'>
 					<IconButton type='button' color='inherit'>
 						<SearchIcon />
 					</IconButton>
@@ -53,18 +69,19 @@ const Header = ({ toggleActive }) => {
 					<Badge badgeContent={0} color='secondary'>
 						<ShoppingCartIcon />
 					</Badge>
-					<Avatar
-						alt='User Name'
-						src='https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1gqfbei6sq37q1n1vcp1dvejr910.png'
-					/>
-					<Typography variant='body2' className='username'>
-						Pedro Bala
-					</Typography>
-					<Typography variant='body2' className='view-profile'>
-						<Link sx={{ color: 'white' }} href='/profile'>
-							View Profile
-						</Link>
-					</Typography>
+					{customer && (
+						<>
+							<Avatar alt={customer.name} src={customer.image} />
+							<Typography variant='body2' className='username'>
+								{customer.name}
+							</Typography>
+							<Typography variant='body2' className='view-profile'>
+								<Link sx={{ color: 'white' }} href='/profile'>
+									Ver Perfil
+								</Link>
+							</Typography>
+						</>
+					)}
 				</div>
 			</Toolbar>
 		</AppBar>
