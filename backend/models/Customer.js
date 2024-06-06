@@ -7,6 +7,9 @@ const Customer = {
 	getById: (id) => {
 		return knex('customers').where({ id }).first();
 	},
+	getByEmail: (email) => {
+		return knex('customers').where({ email }).first();
+	},
 	create: (customer) => {
 		return knex('customers').insert(customer).returning('*');
 	},

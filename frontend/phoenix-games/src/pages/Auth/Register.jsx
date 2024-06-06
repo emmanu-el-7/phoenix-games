@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../slices/authSlice';
 import { NavLink } from 'react-router-dom';
 import Message from '../../components/Message/Message';
+import './Auth.css';
 
 const Register = () => {
 	const [customer, setcustomer] = useState({
@@ -32,9 +33,9 @@ const Register = () => {
 
 	return (
 		<div id='register'>
-			<h2>InstaUFSC</h2>
+			<h2>Phoenix Games</h2>
 			<p className='subtitle'>
-				Cadastre-se para ver as fotos dos seus contatos.
+				Cadastre-se para ter acesso ao maior acervo de jogos da América Latina
 			</p>
 			<form onSubmit={handleSubmit}>
 				<input

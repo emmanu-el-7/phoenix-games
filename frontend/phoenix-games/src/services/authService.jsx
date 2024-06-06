@@ -4,17 +4,17 @@ const register = async (data) => {
 	const config = requestConfig('POST', data);
 
 	try {
-		const res = await fetch(api + '/customers/register', config)
-			.then((res) => res.json())
-			.catch((err) => err);
-
-		if (res._id) {
-			localStorage.setItem('customer', JSON.stringify(res));
+		const res = await fetch(api + '/register', config);
+		if (!res.ok) {
+			throw new Error('Failed to register');
 		}
 
-		return res;
+		const customer = await res.json();
+		localStorage.setItem('customer', JSON.stringify(customer));
+		return customer;
 	} catch (error) {
-		console.log(error);
+		console.error('Error during registration:', error);
+		throw error;
 	}
 };
 
@@ -26,17 +26,18 @@ const login = async (data) => {
 	const config = requestConfig('POST', data);
 
 	try {
-		const res = await fetch(api + '/customers/login', config)
-			.then((res) => res.json())
-			.catch((err) => err);
+		const res = await fetch(api + '/login', config);
+		const responseData = await res.json();
 
-		if (res._id) {
-			localStorage.setItem('customer', JSON.stringify(res));
+		if (res.ok) {
+			localStorage.setItem('user', JSON.stringify(responseData));
+			return responseData;
+		} else {
+			throw new Error('Failed to login');
 		}
-
-		return res;
 	} catch (error) {
-		console.log(error);
+		console.error('Error during login:', error);
+		throw error;
 	}
 };
 

@@ -22,7 +22,6 @@ const Header = ({ toggleActive }) => {
 	const [customer, setCustomer] = useState(null);
 
 	useEffect(() => {
-		// Supondo que o customerService tenha um método para obter os detalhes do usuário
 		const fetchCustomerDetails = async () => {
 			try {
 				const data = await customerService.getCustomerDetails();

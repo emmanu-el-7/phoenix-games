@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../slices/authSlice';
 import { NavLink } from 'react-router-dom';
 import Message from '../../components/Message/Message';
+import './Auth.css';
 
 const Login = () => {
 	const [customer, setcustomer] = useState({
@@ -30,8 +31,10 @@ const Login = () => {
 
 	return (
 		<div id='login'>
-			<h2>InstaUFSC</h2>
-			<p className='subtitle'>Faça o login para ver as novidades.</p>
+			<h2>Phoenix Games</h2>
+			<p className='subtitle'>
+				Faça o login para ter acesso ao maior acervo de jogos da América Latina
+			</p>
 			<form onSubmit={handleSubmit}>
 				<input
 					type='text'

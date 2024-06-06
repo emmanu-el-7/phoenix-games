@@ -7,6 +7,14 @@
 	margin: 2em auto;
 }
 
+#login body,
+#register body {
+	background-image: url('https://gcs.steamosaic.com/6/76561198838279736.jpg');
+	background-size: cover;
+	background-position: center;
+	height: 100px;
+}
+
 #login h2,
 #register h2 {
 	text-align: center;

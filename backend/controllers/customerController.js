@@ -1,3 +1,4 @@
+const Customer = require('../models/Customer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
@@ -8,69 +9,73 @@ const generateToken = (id) => {
 
 const register = async (request, h) => {
 	const { name, email, password } = request.payload;
-	const db = request.server.app.db;
 
-	const existingCustomer = await db('customers').where({ email }).first();
+	try {
+		const existingCustomer = await Customer.getByEmail(email);
+		if (existingCustomer) {
+			return h
+				.response({ errors: ['Por favor, utilize outro e-mail.'] })
+				.code(422);
+		}
 
-	if (existingCustomer) {
-		return h
-			.response({ errors: ['Por favor, utilize outro e-mail.'] })
-			.code(422);
-	}
+		const salt = await bcrypt.genSalt();
+		const passwordHash = await bcrypt.hash(password, salt);
 
-	const salt = await bcrypt.genSalt();
-	const passwordHash = await bcrypt.hash(password, salt);
-
-	const [newCustomer] = await db('customers')
-		.insert({
+		const newCustomer = await Customer.create({
 			name,
 			email,
 			password: passwordHash,
-		})
-		.returning('*');
+		});
 
-	if (!newCustomer) {
+		const token = generateToken(newCustomer.id);
+
+		return h.response({ id: newCustomer.id, token }).code(201);
+	} catch (error) {
+		console.error('Error registering customer:', error);
 		return h
 			.response({ errors: ['Houve um erro, por favor tente mais tarde!'] })
-			.code(422);
+			.code(500);
 	}
-
-	return h
-		.response({
-			id: newCustomer.id,
-			token: generateToken(newCustomer.id),
-		})
-		.code(201);
 };
 
 const login = async (request, h) => {
+	console.log('Login');
 	const { email, password } = request.payload;
-	const db = request.server.app.db;
 
-	const customer = await db('customers').where({ email }).first();
+	try {
+		const customer = await Customer.getByEmail(email);
+		if (!customer) {
+			return h.response({ errors: ['Usuário não encontrado'] }).code(404);
+		}
 
-	if (!customer) {
-		return h.response({ errors: ['Usuário não encontrado'] }).code(404);
+		const isMatch = await bcrypt.compare(password, customer.password);
+		if (!isMatch) {
+			return h.response({ errors: ['Senha incorreta'] }).code(422);
+		}
+
+		const token = generateToken(customer.id);
+
+		return h
+			.response({ id: customer.id, profileImage: customer.profileImage, token })
+			.code(200);
+	} catch (error) {
+		console.error('Error logging in:', error);
+		return h
+			.response({ errors: ['Houve um erro, por favor tente mais tarde!'] })
+			.code(500);
 	}
-
-	const isMatch = await bcrypt.compare(password, customer.password);
-
-	if (!isMatch) {
-		return h.response({ errors: ['Senha incorreta'] }).code(422);
-	}
-
-	return h
-		.response({
-			id: customer.id,
-			profileImage: customer.profileImage,
-			token: generateToken(customer.id),
-		})
-		.code(200);
 };
 
 const getCurrentCustomer = async (request, h) => {
-	const customer = request.auth.credentials;
-	return h.response(customer).code(200);
+	try {
+		const customer = request.auth.credentials;
+		return h.response(customer).code(200);
+	} catch (error) {
+		console.error('Error fetching current customer:', error);
+		return h
+			.response({ errors: ['Houve um erro ao buscar o cliente atual.'] })
+			.code(500);
+	}
 };
 
 const update = async (request, h) => {
@@ -81,40 +86,20 @@ const update = async (request, h) => {
 		profileImage = request.file.filename;
 	}
 
-	const db = request.server.app.db;
-	const reqCustomer = request.auth.credentials;
-
-	let updatedFields = { name };
-	if (password) {
-		const salt = await bcrypt.genSalt();
-		const passwordHash = await bcrypt.hash(password, salt);
-		updatedFields.password = passwordHash;
-	}
-	if (profileImage) {
-		updatedFields.profileImage = profileImage;
-	}
-
-	const [customer] = await db('customers')
-		.where({ id: reqCustomer.id })
-		.update(updatedFields)
-		.returning('*');
-
-	if (!customer) {
-		return h.response({ errors: ['Usuário não encontrado'] }).code(404);
-	}
-
-	return h.response(customer).code(200);
-};
-
-const getCustomerById = async (request, h) => {
-	const { id } = request.params;
-	const db = request.server.app.db;
-
 	try {
-		const customer = await db('customers')
-			.where({ id })
-			.select('id', 'name', 'email', 'profileImage')
-			.first();
+		const reqCustomer = request.auth.credentials;
+
+		let updatedFields = { name };
+		if (password) {
+			const salt = await bcrypt.genSalt();
+			const passwordHash = await bcrypt.hash(password, salt);
+			updatedFields.password = passwordHash;
+		}
+		if (profileImage) {
+			updatedFields.profileImage = profileImage;
+		}
+
+		const customer = await Customer.update(reqCustomer.id, updatedFields);
 
 		if (!customer) {
 			return h.response({ errors: ['Usuário não encontrado'] }).code(404);
@@ -122,19 +107,41 @@ const getCustomerById = async (request, h) => {
 
 		return h.response(customer).code(200);
 	} catch (error) {
-		return h.response({ errors: ['Erro ao buscar usuário.'] }).code(500);
+		console.error('Error updating customer:', error);
+		return h
+			.response({ errors: ['Houve um erro ao atualizar o cliente.'] })
+			.code(500);
+	}
+};
+
+const getCustomerById = async (request, h) => {
+	const { id } = request.params;
+
+	try {
+		const customer = await Customer.getById(id);
+
+		if (!customer) {
+			return h.response({ errors: ['Usuário não encontrado'] }).code(404);
+		}
+
+		return h.response(customer).code(200);
+	} catch (error) {
+		console.error('Error fetching customer by ID:', error);
+		return h
+			.response({ errors: ['Houve um erro ao buscar o cliente.'] })
+			.code(500);
 	}
 };
 
 const getAllCustomers = async (request, h) => {
-	const db = request.server.app.db;
-
 	try {
-		const customers = await db('customers');
+		const customers = await Customer.getAll();
 		return h.response(customers).code(200);
 	} catch (error) {
-		console.error('Erro ao buscar clientes:', error);
-		return h.response({ error: 'Erro ao buscar clientes' }).code(500);
+		console.error('Error fetching all customers:', error);
+		return h
+			.response({ errors: ['Houve um erro ao buscar todos os clientes.'] })
+			.code(500);
 	}
 };
 

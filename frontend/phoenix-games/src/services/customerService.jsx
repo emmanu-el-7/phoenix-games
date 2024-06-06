@@ -27,7 +27,7 @@ const updateProfile = async (data, token) => {
 	}
 };
 
-const getUserDetails = async (id) => {
+const getCustomerDetails = async (id) => {
 	const config = requestConfig('GET');
 	try {
 		const res = await fetch(api + '/customers/' + id, config)
@@ -43,7 +43,7 @@ const getUserDetails = async (id) => {
 const customerService = {
 	profile,
 	updateProfile,
-	getUserDetails,
+	getCustomerDetails,
 };
 
 export default customerService;
