@@ -51,18 +51,9 @@ function App() {
 		<ErrorBoundary>
 			<Router>
 				<Routes>
-					<Route
-						path='/'
-						element={auth ? <Main /> : <Navigate to='/login' />}
-					/>
-					<Route
-						path='/login'
-						element={!auth ? <Login /> : <Navigate to='/' />}
-					/>
-					<Route
-						path='/register'
-						element={!auth ? <Register /> : <Navigate to='/' />}
-					/>
+					<Route path='/' element={<Main />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/register' element={<Register />} />
 				</Routes>
 			</Router>
 		</ErrorBoundary>

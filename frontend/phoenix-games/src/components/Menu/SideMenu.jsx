@@ -53,9 +53,9 @@ function SideMenu({ active }) {
 			open={active}
 			anchor='left'
 			sx={{ width: 240, flexShrink: 0 }}
-			className='side-menu'
 		>
 			<Box
+				className='side-menu'
 				sx={{
 					width: 240,
 					display: 'flex',
@@ -64,8 +64,16 @@ function SideMenu({ active }) {
 				}}
 			>
 				<Box sx={{ display: 'flex', alignItems: 'center', padding: '16px' }}>
-					<MenuIcon />
-					<Typography variant='h6' noWrap sx={{ marginLeft: '16px' }}>
+					<Typography
+						variant='h6'
+						noWrap
+						sx={{
+							marginLeft: '16px',
+							color: 'white',
+							fontFamily: 'Bauhaus Modern',
+							textTransform: 'uppercase',
+						}}
+					>
 						Phoenix
 					</Typography>
 				</Box>
@@ -76,24 +84,32 @@ function SideMenu({ active }) {
 							key={item._id}
 							selected={item._id === activeItem}
 							onClick={() => handleItemClick(item._id)}
+							sx={{ color: 'white' }}
 						>
-							<ListItemIcon>{iconMapping[item.icon]}</ListItemIcon>
+							<ListItemIcon sx={{ color: 'white' }}>
+								{iconMapping[item.icon]}
+							</ListItemIcon>
 							<ListItemText primary={item.name} />
 						</ListItem>
 					))}
 				</List>
 				<Box sx={{ marginTop: 'auto', padding: '16px' }}>
-					<List sx={{ display: 'flex', justifyContent: 'space-around' }}>
-						<IconButton color='inherit' href='#'>
+					<List
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-around',
+						}}
+					>
+						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
 							<FacebookIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#'>
+						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
 							<TwitterIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#'>
+						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
 							<YouTubeIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#'>
+						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
 							<ShareIcon />
 						</IconButton>
 					</List>

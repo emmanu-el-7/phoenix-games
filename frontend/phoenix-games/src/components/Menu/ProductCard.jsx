@@ -10,26 +10,32 @@ import PropTypes from 'prop-types';
 
 const ProductCard = ({ product }) => {
 	return (
-		<div className='card-container'>
-			<CardMedia className='product-media' title={product.name}>
-				<img src={product.image} alt={`${product.name} image`} />
-			</CardMedia>
-			<CardContent className='product-feature'>
-				<div className='product-title-wrapper'>
-					<Typography variant='h6' className='product-name'>
-						{product.name}
-					</Typography>
-					<Typography variant='body1' className='product-price'>
-						{product.price}
-					</Typography>
-				</div>
-			</CardContent>
-			<div className='bag'>
-				<IconButton aria-label='add to cart' style={{ color: 'white' }}>
-					<AddShoppingCartIcon />
-				</IconButton>
-				<IconButton aria-label='add to favorites' style={{ color: 'white' }}>
+		<div className='col-xl-3 col-lg-4 col-md-6'>
+			<div className='card-container'>
+				<img src={product.image} alt={`${product.name} capa`} />
+				<IconButton
+					aria-label='add to favorites'
+					style={{ color: 'white' }}
+					className='favoritesBtn'
+				>
 					<FavoriteIcon />
+				</IconButton>
+				<Typography
+					variant='body1'
+					className='product-name'
+					sx={{ color: 'white' }}
+				>
+					{product.name}
+				</Typography>
+				<Typography variant='body1' className='product-price'>
+					R$ {Number(product.price).toFixed(2)}
+				</Typography>
+				<IconButton
+					className='bag'
+					aria-label='add to cart'
+					sx={{ color: 'white' }}
+				>
+					<AddShoppingCartIcon />
 				</IconButton>
 			</div>
 		</div>
@@ -40,6 +46,8 @@ ProductCard.propTypes = {
 	product: PropTypes.shape({
 		name: PropTypes.string.isRequired,
 		image: PropTypes.string.isRequired,
+		rating: PropTypes.number.isRequired,
+		category: PropTypes.string.isRequired,
 		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	}),
 };

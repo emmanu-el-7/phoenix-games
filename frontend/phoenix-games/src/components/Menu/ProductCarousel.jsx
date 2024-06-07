@@ -30,7 +30,7 @@ const ProductCarousel = ({ products }) => {
 								variant='contained'
 								color={'secondary'}
 								href={`/product/${product.id}`}
-								aria-label={`Buy ${product.name}`}
+								aria-label={`Compre ${product.name}`}
 							>
 								Compre já!
 							</Button>

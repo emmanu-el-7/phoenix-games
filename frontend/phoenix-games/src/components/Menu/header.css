@@ -2,12 +2,9 @@
 	display: flex;
 	justify-content: space-between;
 	background: transparent;
+	border-radius: 30px 8px;
 }
 
 .search-placeholder {
 	color: #ffff;
-}
-
-.user-area {
-	align-items: end;
 }

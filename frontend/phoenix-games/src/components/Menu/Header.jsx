@@ -68,6 +68,8 @@ const Header = ({ toggleActive }) => {
 					<Badge badgeContent={0} color='secondary'>
 						<ShoppingCartIcon />
 					</Badge>
+				</div>
+				<div className='user-info'>
 					{customer && (
 						<>
 							<Avatar alt={customer.name} src={customer.image} />

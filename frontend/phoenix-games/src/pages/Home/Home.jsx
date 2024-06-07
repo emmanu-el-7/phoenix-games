@@ -15,8 +15,7 @@ const Home = ({ products }) => {
 					<div className='col-lg-6 justify-content-start'>
 						<h2 className='sectionTitle'>Top Rated</h2>
 					</div>
-
-					<div className='row_'>
+					<div className='cards-grid'>
 						{products
 							.sort((a, b) => b.rating - a.rating)
 							.slice(0, 4)
