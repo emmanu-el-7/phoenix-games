@@ -19,13 +19,12 @@ export const useAuth = () => {
 		};
 
 		checkAuthStatus();
-
-		return () => {};
 	}, []);
 
 	const login = async (credentials) => {
+		setLoading(true);
 		try {
-			const user = await authService.login(credentials);
+			await authService.login(credentials);
 			setAuth(true);
 		} catch (error) {
 			setError(error);
@@ -35,6 +34,7 @@ export const useAuth = () => {
 	};
 
 	const logout = async () => {
+		setLoading(true);
 		try {
 			await authService.logout();
 			setAuth(false);

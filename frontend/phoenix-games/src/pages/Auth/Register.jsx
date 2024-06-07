@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../slices/authSlice';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Message from '../../components/Message/Message';
 import './Auth.css';
 
 const Register = () => {
+	const navigate = useNavigate();
 	const [customer, setcustomer] = useState({
 		name: '',
 		email: '',
@@ -26,6 +27,7 @@ const Register = () => {
 
 		try {
 			await register(customer);
+			navigate('/');
 		} catch (err) {
 			console.error(err);
 		}

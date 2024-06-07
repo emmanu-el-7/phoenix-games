@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useAuth } from '../../slices/authSlice';
-import { NavLink } from 'react-router-dom';
 import Message from '../../components/Message/Message';
 import './Auth.css';
 
 const Login = () => {
-	const [customer, setcustomer] = useState({
+	const navigate = useNavigate();
+	const [customer, setCustomer] = useState({
 		email: '',
 		password: '',
 	});
@@ -13,7 +14,7 @@ const Login = () => {
 	const { login, reset, loading, error } = useAuth();
 
 	const handleChange = (e) => {
-		setcustomer({
+		setCustomer({
 			...customer,
 			[e.target.name]: e.target.value,
 		});
@@ -24,6 +25,7 @@ const Login = () => {
 
 		try {
 			await login(customer);
+			navigate('/');
 		} catch (err) {
 			console.error(err);
 		}
