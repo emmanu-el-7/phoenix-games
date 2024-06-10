@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from '@mui/material';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -29,7 +27,10 @@ const ProductCard = ({ product }) => {
 					<Typography
 						variant='body1'
 						className='product-name'
-						sx={{ color: 'white', textDecoration: 'none' }}
+						sx={{
+							color: 'white',
+							textDecoration: 'none',
+						}}
 						component='a'
 						href={`/product/${product.id}`}
 						target='_blank'

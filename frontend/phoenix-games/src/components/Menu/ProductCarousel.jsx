@@ -22,7 +22,11 @@ const ProductCarousel = ({ products }) => {
 					/>
 
 					<CardContent className='content'>
-						<Typography variant='h5' component='h2' color={'white'}>
+						<Typography
+							variant='h5'
+							component='h2'
+							sx={{ color: 'white', fontFamily: 'Poppins' }}
+						>
 							{product.name}
 						</Typography>
 						<div className='buttons'>

@@ -89,7 +89,10 @@ function SideMenu({ active }) {
 							<ListItemIcon sx={{ color: 'white' }}>
 								{iconMapping[item.icon]}
 							</ListItemIcon>
-							<ListItemText primary={item.name} />
+							<ListItemText
+								primary={item.name}
+								sx={{ fontFamily: 'Poppins' }}
+							/>
 						</ListItem>
 					))}
 				</List>
