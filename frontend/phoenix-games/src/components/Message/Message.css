@@ -9,9 +9,9 @@
 }
 
 .message.error {
-	color: #721c24;
-	background-color: #f8d7da;
-	border-color: #f5c6cb;
+	color: #ff0019;
+	background-color: var(--primary);
+	border-color: var(--second);
 }
 
 .message.success {
