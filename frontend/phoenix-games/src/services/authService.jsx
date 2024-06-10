@@ -30,7 +30,7 @@ const login = async (data) => {
 		const responseData = await res.json();
 
 		if (res.ok) {
-			localStorage.setItem('user', JSON.stringify(responseData));
+			localStorage.setItem('customer', JSON.stringify(responseData));
 			return responseData;
 		} else {
 			throw new Error('Failed to login');

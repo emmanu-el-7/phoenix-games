@@ -5,6 +5,7 @@ import {
 	useEffect,
 	useCallback,
 } from 'react';
+import { stringify, parse } from 'flatted';
 import authService from '../services/authService';
 import PropTypes from 'prop-types';
 
@@ -15,14 +16,27 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-	const [customer, setCustomer] = useState(
-		JSON.parse(localStorage.getItem('customer')) || null
-	);
+	const [customer, setCustomer] = useState(() => {
+		const storedCustomer = localStorage.getItem('customer');
+		if (storedCustomer) {
+			try {
+				return parse(storedCustomer);
+			} catch (e) {
+				console.error('Failed to parse customer from localStorage', e);
+				return null;
+			}
+		}
+		return null;
+	});
 	const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		localStorage.setItem('customer', JSON.stringify(customer));
+		try {
+			localStorage.setItem('customer', stringify(customer));
+		} catch (e) {
+			console.error('Failed to stringify customer for localStorage', e);
+		}
 	}, [customer]);
 
 	const register = useCallback(async (customerData) => {
