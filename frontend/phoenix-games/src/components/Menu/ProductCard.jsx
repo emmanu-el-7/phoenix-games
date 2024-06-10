@@ -29,8 +29,11 @@ const ProductCard = ({ product }) => {
 					<Typography
 						variant='body1'
 						className='product-name'
-						sx={{ color: 'white' }}
+						sx={{ color: 'white', textDecoration: 'none' }}
+						component='a'
 						href={`/product/${product.id}`}
+						target='_blank'
+						rel='noopener noreferrer'
 						aria-label={`Compre ${product.name}`}
 					>
 						{product.name}
