@@ -58,12 +58,27 @@ const deleteProduct = async (id, token) => {
 	}
 };
 
+const searchProducts = async (query, token) => {
+	const config = requestConfig('GET', null, token);
+
+	try {
+		const res = await fetch(api + '/products/search?q=' + query, config)
+			.then((res) => res.json())
+			.catch((err) => err);
+
+		return res;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 const productService = {
 	listProducts,
 	getProductDetails,
 	createProduct,
 	updateProduct,
 	deleteProduct,
+	searchProducts,
 };
 
 export default productService;

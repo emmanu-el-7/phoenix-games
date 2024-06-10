@@ -13,6 +13,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import ProductPage from './pages/Products/ProductPage';
+import Search from './pages/Search/Search';
 
 class ErrorBoundary extends Component {
 	constructor(props) {
@@ -56,6 +57,7 @@ function App() {
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 					<Route path='/product/:id' element={<ProductPage />} />
+					<Route path='/search' element={<Search />} />
 				</Routes>
 			</Router>
 		</ErrorBoundary>

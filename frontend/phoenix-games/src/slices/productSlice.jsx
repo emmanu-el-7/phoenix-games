@@ -56,6 +56,17 @@ export const deleteProduct = createAsyncThunk(
 	}
 );
 
+export const searchProducts = createAsyncThunk(
+	'products/search',
+	async (query, thunkAPI) => {
+		const token = thunkAPI.getState().auth.user.token;
+
+		const data = await productService.searchProducts(query, token);
+
+		return data;
+	}
+);
+
 const productSlice = createSlice({
 	name: 'products',
 	initialState,
@@ -114,6 +125,18 @@ const productSlice = createSlice({
 				);
 			})
 			.addCase(deleteProduct.rejected, (state, action) => {
+				state.loading = false;
+				state.error = action.error.message;
+			})
+			.addCase(searchProducts.pending, (state) => {
+				state.loading = true;
+				state.error = null;
+			})
+			.addCase(searchProducts.fulfilled, (state, action) => {
+				state.loading = false;
+				state.products = action.payload;
+			})
+			.addCase(searchProducts.rejected, (state, action) => {
 				state.loading = false;
 				state.error = action.error.message;
 			});
