@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { useAuth } from '../../slices/authSlice';
+import { useAuth } from '../../hooks/useAuth';
 import Message from '../../components/Message/Message';
 import './Auth.css';
 
@@ -11,18 +11,17 @@ const Login = () => {
 		password: '',
 	});
 
-	const { login, reset, loading, error } = useAuth();
+	const { login, loading, error } = useAuth();
 
 	const handleChange = (e) => {
-		setCustomer({
-			...customer,
+		setCustomer((prevCustomer) => ({
+			...prevCustomer,
 			[e.target.name]: e.target.value,
-		});
+		}));
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		try {
 			await login(customer);
 			navigate('/');

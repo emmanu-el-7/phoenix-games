@@ -44,6 +44,7 @@ ErrorBoundary.propTypes = {
 
 function App() {
 	const { auth, loading } = useAuth();
+	console.log('auth', auth);
 
 	if (loading) {
 		return <p>Carregando aplicação...</p>;
@@ -53,11 +54,26 @@ function App() {
 		<ErrorBoundary>
 			<Router>
 				<Routes>
-					<Route path='/' element={<Main />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/product/:id' element={<ProductPage />} />
-					<Route path='/search' element={<Search />} />
+					<Route
+						path='/'
+						element={auth ? <Main /> : <Navigate to='/login' />}
+					/>
+					<Route
+						path='/login'
+						element={!auth ? <Login /> : <Navigate to='/' />}
+					/>
+					<Route
+						path='/register'
+						element={!auth ? <Register /> : <Navigate to='/' />}
+					/>
+					<Route
+						path='/product/:id'
+						element={auth ? <ProductPage /> : <Navigate to='/login' />}
+					/>
+					<Route
+						path='/search'
+						element={auth ? <Search /> : <Navigate to='/login' />}
+					/>
 				</Routes>
 			</Router>
 		</ErrorBoundary>

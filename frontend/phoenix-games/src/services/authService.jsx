@@ -41,10 +41,15 @@ const login = async (data) => {
 	}
 };
 
+const isLoggedIn = () => {
+	return !!localStorage.getItem('customer');
+};
+
 const authService = {
 	register,
 	logout,
 	login,
+	isLoggedIn,
 };
 
 export default authService;

@@ -12,7 +12,7 @@ export const useAuth = () => {
 				const isLoggedIn = await authService.isLoggedIn();
 				setAuth(isLoggedIn);
 			} catch (error) {
-				setError(error);
+				setError(error.message);
 			} finally {
 				setLoading(false);
 			}
@@ -27,7 +27,7 @@ export const useAuth = () => {
 			await authService.login(credentials);
 			setAuth(true);
 		} catch (error) {
-			setError(error);
+			setError(error.message);
 		} finally {
 			setLoading(false);
 		}
@@ -39,7 +39,7 @@ export const useAuth = () => {
 			await authService.logout();
 			setAuth(false);
 		} catch (error) {
-			setError(error);
+			setError(error.message);
 		} finally {
 			setLoading(false);
 		}
