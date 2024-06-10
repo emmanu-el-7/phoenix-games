@@ -38,6 +38,11 @@
 	font-size: 0.9rem;
 }
 
+.card-container .product-name:hover {
+	color: var(--primary);
+	transition: 0.3s ease;
+}
+
 .card-container .product-price {
 	display: flex;
 	align-items: center;

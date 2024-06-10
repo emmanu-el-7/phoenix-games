@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import IconButton from '@mui/material/IconButton';
@@ -20,13 +21,21 @@ const ProductCard = ({ product }) => {
 				>
 					<FavoriteIcon />
 				</IconButton>
-				<Typography
-					variant='body1'
-					className='product-name'
-					sx={{ color: 'white' }}
+				<Link
+					href={`/product/${product.id}`}
+					aria-label={`Compre ${product.name}`}
+					sx={{ textDecoration: 'none' }}
 				>
-					{product.name}
-				</Typography>
+					<Typography
+						variant='body1'
+						className='product-name'
+						sx={{ color: 'white' }}
+						href={`/product/${product.id}`}
+						aria-label={`Compre ${product.name}`}
+					>
+						{product.name}
+					</Typography>
+				</Link>
 				<Typography variant='body1' className='product-price'>
 					R$ {Number(product.price).toFixed(2)}
 				</Typography>
@@ -44,6 +53,7 @@ const ProductCard = ({ product }) => {
 
 ProductCard.propTypes = {
 	product: PropTypes.shape({
+		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 		image: PropTypes.string.isRequired,
 		rating: PropTypes.number.isRequired,
