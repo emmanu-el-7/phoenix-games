@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
 const generateToken = (id) => {
-	return jwt.sign({ id }, jwtSecret, { expiresIn: '7d' });
+	return jwt.sign({ id }, jwtSecret, { expiresIn: '1d' });
 };
 
 const register = async (request, h) => {

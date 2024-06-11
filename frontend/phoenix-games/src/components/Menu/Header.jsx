@@ -19,7 +19,7 @@ import {
 import { useAuth } from '../../hooks/useAuth';
 
 const Header = ({ toggleActive }) => {
-	const { auth, logout } = useAuth();
+	const { logout } = useAuth();
 	const [query, setQuery] = useState('');
 	const navigate = useNavigate();
 

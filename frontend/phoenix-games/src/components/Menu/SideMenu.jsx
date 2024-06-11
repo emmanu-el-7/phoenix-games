@@ -10,7 +10,6 @@ import {
 	Typography,
 } from '@mui/material';
 import {
-	Menu as MenuIcon,
 	Favorite as FavoriteIcon,
 	ShoppingBag as ShoppingBagIcon,
 	Home as HomeIcon,
