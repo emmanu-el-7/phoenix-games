@@ -25,7 +25,7 @@
 	background: var(--bgColor);
 	padding: 5px;
 	border-radius: 0 0 0 20px;
-	color: aliceblue;
+	color: wheat;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -56,7 +56,7 @@
 	position: absolute;
 	right: 207px;
 	bottom: 80px;
-	color: aliceblue;
+	color: wheat;
 	background: var(--bgColor);
 	padding: 10px;
 	width: 40px;

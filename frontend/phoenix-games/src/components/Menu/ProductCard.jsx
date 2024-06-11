@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
 				<img src={product.image} alt={`${product.name} capa`} />
 				<IconButton
 					aria-label='add to favorites'
-					style={{ color: 'white' }}
+					style={{ color: 'wheat' }}
 					className='favoritesBtn'
 				>
 					<FavoriteIcon />
@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
 						variant='body1'
 						className='product-name'
 						sx={{
-							color: 'white',
+							color: 'wheat',
 							textDecoration: 'none',
 						}}
 						component='a'
@@ -40,13 +40,17 @@ const ProductCard = ({ product }) => {
 						{product.name}
 					</Typography>
 				</Link>
-				<Typography variant='body1' className='product-price'>
+				<Typography
+					variant='body1'
+					className='product-price'
+					sx={{ color: 'wheat' }}
+				>
 					R$ {Number(product.price).toFixed(2)}
 				</Typography>
 				<IconButton
 					className='bag'
 					aria-label='add to cart'
-					sx={{ color: 'white' }}
+					sx={{ color: 'wheat' }}
 				>
 					<AddShoppingCartIcon />
 				</IconButton>

@@ -30,12 +30,12 @@
 
 .favoriteBtn:hover {
 	transition: 0.6s ease;
-	color: var(--second);
+	color: wheat;
 }
 
 .cartBtn:hover {
 	transition: 0.6s ease;
-	color: var(--second);
+	color: wheat;
 }
 
 .product-trailer {
@@ -46,9 +46,4 @@
 .product-trailer iframe {
 	width: 60vh;
 	height: 60vh;
-}
-
-.play-button:hover {
-	background-color: var(--primary);
-	transition: 0.6s ease;
 }

@@ -71,34 +71,41 @@ const ProductPage = () => {
 						<Button
 							onClick={toggleTrailer}
 							className='play-button'
-							sx={{ color: 'aqua', background: 'var(--second)' }}
+							sx={{
+								color: 'wheat',
+								backgroundColor: 'var(--second)',
+								'&:hover': {
+									backgroundColor: 'var(--primary)',
+									transition: '0.6s ease',
+								},
+							}}
 						>
 							{showTrailer ? 'Hide Trailer' : 'Play Trailer'}
 						</Button>
 						<Typography
 							variant='h5'
 							component='div'
-							sx={{ color: 'white', fontFamily: 'Bauhaus Modern' }}
+							sx={{ color: 'wheat', fontFamily: 'Bauhaus Modern' }}
 						>
 							{product.name}
 						</Typography>
 						<div className='product-infos'>
 							<Typography
 								variant='h6'
-								sx={{ color: 'white', fontFamily: 'Poppins' }}
+								sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 							>
 								R$ {Number(product.price).toFixed(2)}
 							</Typography>
 							<Typography
 								variant='h7'
-								sx={{ color: 'white', fontFamily: 'Poppins' }}
+								sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 							>
 								Categorias: {product.category}
 							</Typography>
 							<Typography
 								variant='h8'
 								component='div'
-								sx={{ color: 'white', fontFamily: 'Poppins' }}
+								sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 							>
 								Metacritic: {product.rating}
 							</Typography>
@@ -122,7 +129,7 @@ const ProductPage = () => {
 						<Typography
 							variant='body2'
 							color='text.secondary'
-							sx={{ color: 'white', fontFamily: 'Poppins' }}
+							sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 						>
 							{product.description}
 						</Typography>

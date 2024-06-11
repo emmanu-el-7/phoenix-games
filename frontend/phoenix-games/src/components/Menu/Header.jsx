@@ -50,11 +50,12 @@ const Header = ({ toggleActive }) => {
 					color='inherit'
 					aria-label='menu'
 					onClick={toggleActive}
+					sx={{ color: 'wheat' }}
 				>
 					<MenuIcon />
 				</IconButton>
 				<form onSubmit={handleSearch} className='header-search'>
-					<IconButton type='submit' color='inherit'>
+					<IconButton type='submit' color='inherit' sx={{ color: 'wheat' }}>
 						<SearchIcon />
 					</IconButton>
 					<InputBase
@@ -62,7 +63,7 @@ const Header = ({ toggleActive }) => {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						inputProps={{ 'aria-label': 'search' }}
-						sx={{ color: 'white' }}
+						sx={{ color: 'wheat' }}
 					/>
 				</form>
 				<List
@@ -76,20 +77,24 @@ const Header = ({ toggleActive }) => {
 				>
 					<ListItem sx={{ padding: 0 }}>
 						<NavLink to='/'>
-							<IconButton color='inherit' sx={{ color: 'white' }}>
+							<IconButton color='inherit' sx={{ color: 'wheat' }}>
 								<HomeIcon />
 							</IconButton>
 						</NavLink>
 					</ListItem>
 					<ListItem sx={{ padding: 0 }}>
 						<NavLink to='/profile'>
-							<IconButton color='inherit' sx={{ color: 'white' }}>
+							<IconButton color='inherit' sx={{ color: 'wheat' }}>
 								<PersonIcon />
 							</IconButton>
 						</NavLink>
 					</ListItem>
 					<ListItem sx={{ padding: 0 }}>
-						<IconButton color='inherit' onClick={handleLogout}>
+						<IconButton
+							color='inherit'
+							onClick={handleLogout}
+							sx={{ color: 'wheat' }}
+						>
 							<ExitToAppIcon />
 						</IconButton>
 					</ListItem>

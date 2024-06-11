@@ -25,18 +25,24 @@ const ProductCarousel = ({ products }) => {
 						<Typography
 							variant='h5'
 							component='h2'
-							sx={{ color: 'white', fontFamily: 'Poppins' }}
+							sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 						>
 							{product.name}
 						</Typography>
 						<div className='buttons'>
 							<Button
 								variant='contained'
-								color={'secondary'}
 								href={`/product/${product.id}`}
 								target='_blank'
 								rel='noopener noreferrer'
 								aria-label={`Compre ${product.name}`}
+								sx={{
+									color: 'wheat',
+									backgroundColor: 'var(--second)',
+									'&:hover': {
+										backgroundColor: 'var(--primary)',
+									},
+								}}
 							>
 								Compre já!
 							</Button>

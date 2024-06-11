@@ -68,7 +68,7 @@ function SideMenu({ active }) {
 						noWrap
 						sx={{
 							marginLeft: '16px',
-							color: 'white',
+							color: 'wheat',
 							fontFamily: 'Bauhaus Modern',
 							textTransform: 'uppercase',
 						}}
@@ -83,9 +83,9 @@ function SideMenu({ active }) {
 							key={item._id}
 							selected={item._id === activeItem}
 							onClick={() => handleItemClick(item._id)}
-							sx={{ color: 'white' }}
+							sx={{ color: 'wheat' }}
 						>
-							<ListItemIcon sx={{ color: 'white' }}>
+							<ListItemIcon sx={{ color: 'wheat' }}>
 								{iconMapping[item.icon]}
 							</ListItemIcon>
 							<ListItemText
@@ -102,16 +102,16 @@ function SideMenu({ active }) {
 							justifyContent: 'space-around',
 						}}
 					>
-						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
+						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
 							<FacebookIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
+						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
 							<TwitterIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
+						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
 							<YouTubeIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'white' }}>
+						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
 							<ShareIcon />
 						</IconButton>
 					</List>
