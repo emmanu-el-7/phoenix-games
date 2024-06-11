@@ -10,7 +10,6 @@ import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import './App.css';
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
 import ProductPage from './pages/Products/ProductPage';
 import Search from './pages/Search/Search';

@@ -1,37 +1,50 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { AppBar, Toolbar, IconButton, InputBase } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import { useNavigate } from 'react-router-dom';
-import './header.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {
+	AppBar,
+	Toolbar,
+	IconButton,
+	InputBase,
+	List,
+	ListItem,
+} from '@mui/material';
+import {
+	Search as SearchIcon,
+	Home as HomeIcon,
+	Person as PersonIcon,
+	ExitToApp as ExitToAppIcon,
+	Menu as MenuIcon,
+} from '@mui/icons-material';
+import { useAuth } from '../../hooks/useAuth';
 
 const Header = ({ toggleActive }) => {
-	const [searchTerm, setSearchTerm] = useState('');
+	const { auth, logout } = useAuth();
+	const [query, setQuery] = useState('');
 	const navigate = useNavigate();
 
-	const handleSearchChange = (event) => {
-		setSearchTerm(event.target.value);
+	const handleLogout = async () => {
+		await logout();
+		navigate('/login');
 	};
 
-	const handleSearchSubmit = () => {
-		if (searchTerm.trim() !== '') {
-			navigate(`/search?q=${encodeURIComponent(searchTerm)}`);
+	const handleSearch = (e) => {
+		e.preventDefault();
+		if (query) {
+			navigate(`search?q=${query}`);
 		}
 	};
 
 	return (
 		<AppBar
 			position='static'
-			className='header-container'
-			sx={{
-				background: 'var(--second)',
-				display: 'flex',
-				justifyContent: 'space-between',
-				borderRadius: '30px 8px',
-			}}
+			className='header'
+			sx={{ background: 'var(--second)', borderRadius: '20px 20px 20px 20px' }}
 		>
-			<Toolbar className='toolbar'>
+			<Toolbar
+				className='header-toolbar'
+				sx={{ justifyContent: 'space-between' }}
+			>
 				<IconButton
 					edge='start'
 					color='inherit'
@@ -40,28 +53,47 @@ const Header = ({ toggleActive }) => {
 				>
 					<MenuIcon />
 				</IconButton>
-				<div className='search-container'>
-					<IconButton
-						type='button'
-						color='inherit'
-						onClick={handleSearchSubmit}
-					>
+				<form onSubmit={handleSearch} className='header-search'>
+					<IconButton type='submit' color='inherit'>
 						<SearchIcon />
 					</IconButton>
 					<InputBase
-						className='search-placeholder'
 						placeholder='Pesquisar'
-						value={searchTerm}
-						onChange={handleSearchChange}
-						onKeyPress={(event) => {
-							if (event.key === 'Enter') {
-								handleSearchSubmit();
-							}
-						}}
+						value={query}
+						onChange={(e) => setQuery(e.target.value)}
 						inputProps={{ 'aria-label': 'search' }}
 						sx={{ color: 'white' }}
 					/>
-				</div>
+				</form>
+				<List
+					className='header-links'
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+						marginLeft: 'auto',
+					}}
+				>
+					<ListItem sx={{ padding: 0 }}>
+						<NavLink to='/'>
+							<IconButton color='inherit' sx={{ color: 'white' }}>
+								<HomeIcon />
+							</IconButton>
+						</NavLink>
+					</ListItem>
+					<ListItem sx={{ padding: 0 }}>
+						<NavLink to='/profile'>
+							<IconButton color='inherit' sx={{ color: 'white' }}>
+								<PersonIcon />
+							</IconButton>
+						</NavLink>
+					</ListItem>
+					<ListItem sx={{ padding: 0 }}>
+						<IconButton color='inherit' onClick={handleLogout}>
+							<ExitToAppIcon />
+						</IconButton>
+					</ListItem>
+				</List>
 			</Toolbar>
 		</AppBar>
 	);

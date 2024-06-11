@@ -12,6 +12,11 @@ module.exports = [
 		handler: customerController.login,
 	},
 	{
+		method: 'POST',
+		path: '/logout',
+		handler: customerController.logout,
+	},
+	{
 		method: 'GET',
 		path: '/me',
 		handler: customerController.getCurrentCustomer,

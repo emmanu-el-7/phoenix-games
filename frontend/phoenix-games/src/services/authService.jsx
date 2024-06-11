@@ -19,7 +19,17 @@ const register = async (data) => {
 };
 
 const logout = async () => {
-	localStorage.removeItem('customer');
+	const token = localStorage.getItem('token');
+	const config = requestConfig('POST', null, {
+		Authorization: `Bearer ${token}`,
+	});
+
+	try {
+		await fetch(api + '/logout', config);
+		localStorage.removeItem('token');
+	} catch (error) {
+		console.error('Error during logout:', error);
+	}
 };
 
 const login = async (data) => {
