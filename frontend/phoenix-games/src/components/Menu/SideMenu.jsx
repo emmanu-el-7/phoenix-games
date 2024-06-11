@@ -102,16 +102,40 @@ function SideMenu({ active }) {
 							justifyContent: 'space-around',
 						}}
 					>
-						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
+						<IconButton
+							color='inherit'
+							href='https://youtu.be/Q_yNUtMjQuM?si=fAHoz3rhQ2htWruT'
+							target='_blank'
+							rel='noopener noreferrer'
+							sx={{ color: 'wheat' }}
+						>
 							<FacebookIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
+						<IconButton
+							color='inherit'
+							href='https://youtu.be/Q_yNUtMjQuM?si=fAHoz3rhQ2htWruT'
+							target='_blank'
+							rel='noopener noreferrer'
+							sx={{ color: 'wheat' }}
+						>
 							<TwitterIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
+						<IconButton
+							color='inherit'
+							href='https://youtu.be/Q_yNUtMjQuM?si=fAHoz3rhQ2htWruT'
+							target='_blank'
+							rel='noopener noreferrer'
+							sx={{ color: 'wheat' }}
+						>
 							<YouTubeIcon />
 						</IconButton>
-						<IconButton color='inherit' href='#' sx={{ color: 'wheat' }}>
+						<IconButton
+							color='inherit'
+							href='https://youtu.be/Q_yNUtMjQuM?si=fAHoz3rhQ2htWruT'
+							target='_blank'
+							rel='noopener noreferrer'
+							sx={{ color: 'wheat' }}
+						>
 							<ShareIcon />
 						</IconButton>
 					</List>
