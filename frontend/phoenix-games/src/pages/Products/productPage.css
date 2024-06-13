@@ -4,7 +4,12 @@
 	align-items: center;
 	height: 100vh;
 	padding: 20px;
-	overflow-y: scroll;
+	overflow: scroll;
+}
+
+.product-page::-webkit-scrollbar {
+	width: 0;
+	height: 0;
 }
 
 .product-card {

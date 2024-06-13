@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
@@ -6,19 +5,18 @@ import {
 	Toolbar,
 	IconButton,
 	InputBase,
-	List,
 	ListItem,
+	Box,
 } from '@mui/material';
 import {
 	Search as SearchIcon,
 	Home as HomeIcon,
 	Person as PersonIcon,
 	ExitToApp as ExitToAppIcon,
-	Menu as MenuIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../hooks/useAuth';
 
-const Header = ({ toggleActive }) => {
+const Header = () => {
 	const { logout } = useAuth();
 	const [query, setQuery] = useState('');
 	const navigate = useNavigate();
@@ -43,17 +41,13 @@ const Header = ({ toggleActive }) => {
 		>
 			<Toolbar
 				className='header-toolbar'
-				sx={{ justifyContent: 'space-between' }}
+				sx={{
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					paddingLeft: '20px',
+					paddingRight: '20px',
+				}}
 			>
-				<IconButton
-					edge='start'
-					color='inherit'
-					aria-label='menu'
-					onClick={toggleActive}
-					sx={{ color: 'wheat' }}
-				>
-					<MenuIcon />
-				</IconButton>
 				<form onSubmit={handleSearch} className='header-search'>
 					<IconButton type='submit' color='inherit' sx={{ color: 'wheat' }}>
 						<SearchIcon />
@@ -66,15 +60,7 @@ const Header = ({ toggleActive }) => {
 						sx={{ color: 'wheat' }}
 					/>
 				</form>
-				<List
-					className='header-links'
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-						marginLeft: 'auto',
-					}}
-				>
+				<Box sx={{ display: 'flex', alignItems: 'center' }}>
 					<ListItem sx={{ padding: 0 }}>
 						<NavLink to='/'>
 							<IconButton color='inherit' sx={{ color: 'wheat' }}>
@@ -98,7 +84,7 @@ const Header = ({ toggleActive }) => {
 							<ExitToAppIcon />
 						</IconButton>
 					</ListItem>
-				</List>
+				</Box>
 			</Toolbar>
 		</AppBar>
 	);

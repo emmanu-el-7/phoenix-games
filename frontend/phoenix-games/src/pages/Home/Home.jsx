@@ -18,7 +18,7 @@ const Home = ({ products }) => {
 					<div className='cards-grid'>
 						{products
 							.sort((a, b) => b.rating - a.rating)
-							.slice(0, 4)
+							.slice(0, 5)
 							.map((product) => (
 								<ProductCard key={product._id} product={product} />
 							))}

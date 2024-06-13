@@ -64,7 +64,7 @@ const getCustomerDetails = async (customerId) => {
 	});
 
 	try {
-		const res = await fetch(`${api}/customers/${customerId}`, config);
+		const res = await fetch(`${api}/customer/${customerId}`, config);
 		if (!res.ok) {
 			throw new Error('Failed to fetch customer details');
 		}

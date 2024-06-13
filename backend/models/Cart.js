@@ -2,14 +2,14 @@ const knex = require('../config/db');
 
 const Cart = {
 	getAll: () => {
-		return knex('carts').select('*');
+		return knex('cart').select('*');
 	},
 	getById: (id) => {
-		return knex('carts').where({ id }).first();
+		return knex('cart').where({ id }).first();
 	},
 	create: (cart) => {
 		const timestamp = new Date().toISOString();
-		return knex('carts')
+		return knex('cart')
 			.insert({
 				...cart,
 				created_at: timestamp,
@@ -19,7 +19,7 @@ const Cart = {
 	},
 	update: (id, cart) => {
 		const timestamp = new Date().toISOString();
-		return knex('carts')
+		return knex('cart')
 			.where({ id })
 			.update({
 				...cart,
@@ -28,7 +28,18 @@ const Cart = {
 			.returning('*');
 	},
 	delete: (id) => {
-		return knex('carts').where({ id }).del();
+		return knex('cart').where({ id }).del();
+	},
+	addToCart: (customer_id, product_id) => {
+		const timestamp = new Date().toISOString();
+		return knex('cart')
+			.insert({
+				customer_id: customer_id,
+				product_id: product_id,
+				created_at: timestamp,
+				updated_at: timestamp,
+			})
+			.returning('*');
 	},
 };
 

@@ -9,9 +9,11 @@ import {
 	CardContent,
 	Typography,
 	IconButton,
+	Toolbar,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Header from '../../components/Menu/Header';
 
 const ProductPage = () => {
 	const { id } = useParams();
@@ -47,15 +49,22 @@ const ProductPage = () => {
 	};
 
 	return (
-		<div>
-			<div className='product-page' style={backgroundImageStyle}>
-				<Card className='product-card'>
+		<div style={backgroundImageStyle}>
+			<Toolbar>
+				<Header />
+			</Toolbar>
+			<div className='product-page' style={{ paddingBottom: '3rem' }}>
+				<Card
+					className='product-card'
+					sx={{ borderRadius: '8px', marginTop: '6rem' }}
+				>
 					{!showTrailer ? (
 						<CardMedia
 							component='img'
 							image={product.image}
 							alt={`${product.name} capa`}
 							className='product-image'
+							sx={{ borderRadius: '8px 8px 0 0', objectFit: 'fill' }}
 						/>
 					) : (
 						<div className='product-trailer'>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './main.css';
-import SideMenu from '../../components/Menu/SideMenu';
 import Header from '../../components/Menu/Header';
 import Home from './Home';
 
@@ -43,9 +42,8 @@ function Main() {
 
 	return (
 		<main>
-			<SideMenu active={active} />
-			<div className={`banner ${active ? 'active' : ''}`}>
-				<Header toggleActive={handleToggleActive} />
+			<div className='banner'>
+				<Header />
 				<div className='container-fluid'>
 					<Home products={products} />
 				</div>
