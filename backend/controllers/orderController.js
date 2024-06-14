@@ -54,10 +54,21 @@ const deleteOrder = async (request, h) => {
 	}
 };
 
+const checkout = async (request, h) => {
+	try {
+		const { clientId, items } = request.payload;
+		const newOrder = await Order.checkout(clientId, items);
+		return h.response(newOrder).code(201);
+	} catch (error) {
+		return h.response(error).code(500);
+	}
+};
+
 module.exports = {
 	listOrders,
 	showOrder,
 	createOrder,
 	updateOrder,
 	deleteOrder,
+	checkout,
 };

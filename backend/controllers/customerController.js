@@ -153,28 +153,13 @@ const logout = async (request, h) => {
 		return h.response({ errors: ['No token provided'] }).code(400);
 	}
 
-	blacklist.add(token);
-
 	return h.response({ message: 'Logged out successfully' }).code(200);
-};
-
-const checkBlacklist = (request, h) => {
-	const authHeader = request.headers['authorization'];
-	const token = authHeader && authHeader.split(' ')[1];
-	if (blacklist.has(token)) {
-		return h
-			.response({ errors: ['Token is blacklisted'] })
-			.code(401)
-			.takeover();
-	}
-	return h.continue;
 };
 
 module.exports = {
 	register,
 	login,
 	logout,
-	checkBlacklist,
 	getCurrentCustomer,
 	update,
 	getCustomerById,

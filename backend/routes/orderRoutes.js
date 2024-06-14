@@ -26,4 +26,9 @@ module.exports = [
 		path: '/orders/{id}',
 		handler: orderController.deleteOrder,
 	},
+	{
+		method: 'POST',
+		path: '/orders/checkout',
+		handler: orderController.checkout,
+	},
 ];

@@ -1,4 +1,4 @@
-const cartController = require('../controllers/cartController')
+const cartController = require('../controllers/cartController');
 
 module.exports = [
 	{
@@ -25,5 +25,10 @@ module.exports = [
 		method: 'DELETE',
 		path: '/carts/{id}',
 		handler: cartController.deleteCart,
+	},
+	{
+		method: 'POST',
+		path: '/carts/add-to-cart',
+		handler: cartController.addToCart,
 	},
 ];

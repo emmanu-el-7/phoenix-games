@@ -54,10 +54,21 @@ const deleteCart = async (request, h) => {
 	}
 };
 
+const addToCart = async (request, h) => {
+	try {
+		const { clientId, productId } = request.payload;
+		const addedToCart = await Cart.addToCart(clientId, productId);
+		return h.response(addedToCart).code(201);
+	} catch (error) {
+		return h.response(error).code(500);
+	}
+};
+
 module.exports = {
 	listCarts,
 	showCart,
 	createCart,
 	updateCart,
 	deleteCart,
+	addToCart,
 };
