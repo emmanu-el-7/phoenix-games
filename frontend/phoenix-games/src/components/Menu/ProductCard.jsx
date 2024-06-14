@@ -6,8 +6,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import './productCard.css';
 import PropTypes from 'prop-types';
+import cartService from '../../services/cartService';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, customer_id }) => {
+	const handleAddToCart = async () => {
+		try {
+			const response = await cartService.addToCart(customer_id, product.id);
+			console.log('Product added to cart:', response);
+		} catch (error) {
+			console.error('Error adding product to cart:', error);
+		}
+	};
+
 	return (
 		<div className='col-xl-3 col-lg-4 col-md-6'>
 			<div className='card-container'>
@@ -33,8 +43,6 @@ const ProductCard = ({ product }) => {
 						}}
 						component='a'
 						href={`/product/${product.id}`}
-						target='_blank'
-						rel='noopener noreferrer'
 						aria-label={`Compre ${product.name}`}
 					>
 						{product.name}
@@ -51,6 +59,7 @@ const ProductCard = ({ product }) => {
 					className='bag'
 					aria-label='add to cart'
 					sx={{ color: 'wheat' }}
+					onClick={handleAddToCart}
 				>
 					<AddShoppingCartIcon />
 				</IconButton>
@@ -65,7 +74,8 @@ ProductCard.propTypes = {
 		name: PropTypes.string.isRequired,
 		image: PropTypes.string.isRequired,
 		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-	}),
+	}).isRequired,
+	customer_id: PropTypes.number.isRequired,
 };
 
 export default ProductCard;

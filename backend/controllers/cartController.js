@@ -1,3 +1,4 @@
+const knex = require('../config/db');
 const Cart = require('../models/Cart');
 
 const listCarts = async (request, h) => {
@@ -56,9 +57,23 @@ const deleteCart = async (request, h) => {
 
 const addToCart = async (request, h) => {
 	try {
-		const { clientId, productId } = request.payload;
-		const addedToCart = await Cart.addToCart(clientId, productId);
-		return h.response(addedToCart).code(201);
+		const { customer_id, product_id } = request.payload;
+		const insertedCart = await knex('cart')
+			.insert({ customer_id, product_id })
+			.returning('*');
+
+		return insertedCart[0];
+	} catch (error) {
+		console.error('Error adding product to cart:', error);
+		throw error;
+	}
+};
+
+const removeFromCart = async (request, h) => {
+	const { clientId, productId } = request.payload;
+	try {
+		const result = await Cart.removeFromCart(clientId, productId);
+		return h.response(result).code(200);
 	} catch (error) {
 		return h.response(error).code(500);
 	}
@@ -71,4 +86,5 @@ module.exports = {
 	updateCart,
 	deleteCart,
 	addToCart,
+	removeFromCart,
 };

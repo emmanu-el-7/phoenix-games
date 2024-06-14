@@ -58,17 +58,21 @@ const deleteProduct = async (id, token) => {
 	}
 };
 
-const searchProducts = async (query, token) => {
-	const config = requestConfig('GET', null, token);
-
+const searchProducts = async (query) => {
 	try {
-		const res = await fetch(api + '/products/search?q=' + query, config)
-			.then((res) => res.json())
-			.catch((err) => err);
-
-		return res;
+		const res = await fetch(`/api/search?q=${query}`);
+		if (!res.ok) {
+			if (res.headers.get('content-type')?.includes('text/html')) {
+				const errorText = await res.text();
+				console.error('Error searching products:', errorText);
+			} else {
+				throw new Error(`Error: ${res.status}`);
+			}
+		}
+		return await res.json();
 	} catch (error) {
-		console.log(error);
+		console.error('Error searching products:', error);
+		throw error;
 	}
 };
 

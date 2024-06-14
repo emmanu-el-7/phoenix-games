@@ -1,0 +1,13 @@
+.cart-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	padding: 20px;
+	overflow: scroll;
+}
+
+.cart-page::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}

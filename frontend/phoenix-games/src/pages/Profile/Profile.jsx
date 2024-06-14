@@ -1,17 +1,12 @@
 import './profile.css';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {
-	Button,
 	Card,
 	CardMedia,
 	CardContent,
 	Typography,
-	IconButton,
 	Toolbar,
 } from '@mui/material';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
 import Header from '../../components/Menu/Header';

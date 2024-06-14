@@ -60,9 +60,13 @@ const deleteProduct = async (request, h) => {
 const searchProducts = async (req, res) => {
 	const { q } = req.query;
 
-	const products = await Product.find({ title: new RegExp(q, 'i') }).exec();
-
-	res.status(200).json(products);
+	try {
+		const products = await Product.find({ title: new RegExp(q, 'i') }).exec();
+		res.status(200).json(products);
+	} catch (error) {
+		console.error('Error searching products:', error);
+		res.status(500).json({ error: 'Internal server error' });
+	}
 };
 
 module.exports = {

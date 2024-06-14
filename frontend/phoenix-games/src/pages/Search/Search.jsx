@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Card, Toolbar, Typography } from '@mui/material';
+import Header from '../../components/Menu/Header';
 import ProductCard from '../../components/Menu/ProductCard';
+import productService from '../../services/productService';
 import './search.css';
 
 const Search = () => {
 	const location = useLocation();
-	const search = new URLSearchParams(location.search).get('q');
+	const searchQuery = new URLSearchParams(location.search).get('q');
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -15,33 +18,39 @@ const Search = () => {
 			setLoading(true);
 			setError(null);
 			try {
-				const res = await fetch(`/api/products/search?q=${search}`);
-				if (!res.ok) {
-					throw new Error(`Error: ${res.status}`);
-				}
-				const data = await res.json();
+				const data = await productService.searchProducts(searchQuery);
 				setProducts(data);
 			} catch (error) {
-				setError(error.message);
+				setError('Error searching products. Please try again later.');
+				console.error('Error searching products:', error);
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		if (search) {
+		if (searchQuery) {
 			fetchSearchResults();
 		}
-	}, [search]);
+	}, [searchQuery]);
 
 	return (
-		<div className='search-results'>
-			<h2>Search Results for &quot;{search}&quot;</h2>
-			{loading && <div>Loading...</div>}
-			{error && <div>Error: {error}</div>}
-			<div className='product-list'>
-				{products.map((product) => (
-					<ProductCard key={product.id} product={product} />
-				))}
+		<div className='search-page'>
+			<Toolbar>
+				<Header />
+			</Toolbar>
+			<div className='search-results'>
+				<Card sx={{ background: 'var(--bgColor)' }}>
+					<Typography variant='p' sx={{ color: 'wheat' }}>
+						Search Results for &quot;{searchQuery}&quot;
+						{loading && <div>Loading...</div>}
+						{error && <div>Error: {error}</div>}
+					</Typography>
+				</Card>
+				<Card className='product-list' sx={{ background: 'var(--bgColor)' }}>
+					{products.map((product) => (
+						<ProductCard key={product.id} product={product} />
+					))}
+				</Card>
 			</div>
 		</div>
 	);

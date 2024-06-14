@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import './productPage.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import productService from '../../services/productService';
+import cartService from '../../services/cartService';
 import {
 	Button,
 	Card,
@@ -15,7 +17,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Header from '../../components/Menu/Header';
 
-const ProductPage = () => {
+const ProductPage = ({ customer_id }) => {
 	const { id } = useParams();
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [product, setProduct] = useState(null);
@@ -46,6 +48,15 @@ const ProductPage = () => {
 		backgroundSize: 'cover',
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
+	};
+
+	const handleAddToCart = async () => {
+		try {
+			const response = await cartService.addToCart(customer_id, product.id);
+			console.log('Product added to cart:', response);
+		} catch (error) {
+			console.error('Error adding product to cart:', error);
+		}
 	};
 
 	return (
@@ -131,6 +142,7 @@ const ProductPage = () => {
 								aria-label='add to cart'
 								className='cartBtn'
 								sx={{ color: 'var(--primary)' }}
+								onClick={handleAddToCart}
 							>
 								<AddShoppingCartIcon />
 							</IconButton>

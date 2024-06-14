@@ -14,6 +14,7 @@ import {
 	Person as PersonIcon,
 	ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuth } from '../../hooks/useAuth';
 
 const Header = () => {
@@ -65,6 +66,13 @@ const Header = () => {
 						<NavLink to='/'>
 							<IconButton color='inherit' sx={{ color: 'wheat' }}>
 								<HomeIcon />
+							</IconButton>
+						</NavLink>
+					</ListItem>
+					<ListItem sx={{ padding: 0 }}>
+						<NavLink to='/cart'>
+							<IconButton color='inherit' sx={{ color: 'wheat' }}>
+								<ShoppingCartIcon />
 							</IconButton>
 						</NavLink>
 					</ListItem>

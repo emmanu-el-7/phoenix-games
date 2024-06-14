@@ -33,8 +33,6 @@ const ProductCarousel = ({ products }) => {
 							<Button
 								variant='contained'
 								href={`/product/${product.id}`}
-								target='_blank'
-								rel='noopener noreferrer'
 								aria-label={`Compre ${product.name}`}
 								sx={{
 									color: 'wheat',
