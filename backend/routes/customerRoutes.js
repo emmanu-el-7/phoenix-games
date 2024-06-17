@@ -36,4 +36,9 @@ module.exports = [
 		path: '/customers',
 		handler: customerController.getAllCustomers,
 	},
+	{
+		method: 'DELETE',
+		path: '/customer/{id}',
+		handler: customerController.deleteCustomer,
+	},
 ];

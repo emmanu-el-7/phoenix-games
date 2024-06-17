@@ -39,7 +39,6 @@ const register = async (request, h) => {
 };
 
 const login = async (request, h) => {
-	console.log('Login');
 	const { email, password } = request.payload;
 
 	try {
@@ -156,6 +155,32 @@ const logout = async (request, h) => {
 	return h.response({ message: 'Logged out successfully' }).code(200);
 };
 
+const deleteCustomer = async (request, h) => {
+	const { id } = request.params;
+
+	try {
+		const customer = await Customer.getById(id);
+
+		if (!customer) {
+			return h.response({ errors: ['Customer not found'] }).code(404);
+		}
+
+		await Customer.delete(id);
+
+		return h.response({ message: 'Customer deleted successfully' }).code(200);
+	} catch (error) {
+		console.error('Error deleting customer:', error);
+
+		return h
+			.response({
+				errors: [
+					`An error occurred while deleting the customer: ${error.message}`,
+				],
+			})
+			.code(500);
+	}
+};
+
 module.exports = {
 	register,
 	login,
@@ -164,4 +189,5 @@ module.exports = {
 	update,
 	getCustomerById,
 	getAllCustomers,
+	deleteCustomer,
 };

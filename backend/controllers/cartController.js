@@ -58,14 +58,20 @@ const deleteCart = async (request, h) => {
 const addToCart = async (request, h) => {
 	try {
 		const { customer_id, product_id } = request.payload;
+		const timestamp = new Date().toISOString();
 		const insertedCart = await knex('cart')
-			.insert({ customer_id, product_id })
+			.insert({
+				customer_id,
+				product_id,
+				created_at: timestamp,
+				updated_at: timestamp,
+			})
 			.returning('*');
 
-		return insertedCart[0];
+		return h.response(insertedCart[0]).code(201);
 	} catch (error) {
 		console.error('Error adding product to cart:', error);
-		throw error;
+		return h.response(error).code(500);
 	}
 };
 

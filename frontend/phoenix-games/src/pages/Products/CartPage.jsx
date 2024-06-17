@@ -1,7 +1,14 @@
 import './cartPage.css';
 import React, { useEffect, useState } from 'react';
 import cartService from '../../services/cartService';
-import { Button, Card, IconButton, Typography, Toolbar } from '@mui/material';
+import {
+	Button,
+	Card,
+	IconButton,
+	Typography,
+	Toolbar,
+	CircularProgress,
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useAuth } from '../../hooks/useAuth';
 import Header from '../../components/Menu/Header';
@@ -42,11 +49,22 @@ const CartPage = () => {
 	};
 
 	if (loading) {
-		return <div>Loading...</div>;
+		return (
+			<div className='loading-container'>
+				<CircularProgress />
+				<Typography variant='h6'>Loading...</Typography>
+			</div>
+		);
 	}
 
 	if (error) {
-		return <div>Error: {error}</div>;
+		return (
+			<div className='error-container'>
+				<Typography variant='h6' color='error'>
+					Error: {error}
+				</Typography>
+			</div>
+		);
 	}
 
 	const backgroundImageStyle = {
@@ -55,6 +73,7 @@ const CartPage = () => {
 		backgroundSize: 'cover',
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
+		minHeight: '100vh',
 	};
 
 	return (
@@ -75,36 +94,19 @@ const CartPage = () => {
 						variant='h4'
 						component='h1'
 						gutterBottom
-						sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							color: 'wheat',
-						}}
+						sx={{ textAlign: 'center', color: 'wheat' }}
 					>
 						Seu carrinho
 					</Typography>
 					{fetchError && (
-						<Typography
-							color='error'
-							sx={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						>
+						<Typography color='error' sx={{ textAlign: 'center' }}>
 							{fetchError}
 						</Typography>
 					)}
 					{cartItems.length === 0 ? (
 						<Typography
 							variant='body1'
-							sx={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-								color: 'wheat',
-							}}
+							sx={{ textAlign: 'center', color: 'wheat' }}
 						>
 							Seu carrinho está vazio. Vamos às compras?
 						</Typography>
@@ -147,7 +149,6 @@ const CartPage = () => {
 							marginTop: '20px',
 							display: 'flex',
 							justifyContent: 'center',
-							alignItems: 'center',
 							width: '200px',
 							margin: '0 auto',
 							color: 'wheat',

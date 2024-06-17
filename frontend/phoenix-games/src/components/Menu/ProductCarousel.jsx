@@ -12,7 +12,7 @@ import './productCarousel.css';
 
 const ProductCarousel = ({ products }) => {
 	return (
-		<Carousel>
+		<Carousel indicators={false}>
 			{products.map((product, index) => (
 				<Card key={product.id} className='productSlider'>
 					<CardMedia
