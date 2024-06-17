@@ -49,7 +49,15 @@ const Header = () => {
 					paddingRight: '20px',
 				}}
 			>
-				<form onSubmit={handleSearch} className='header-search'>
+				<img
+					src='https://p7.hiclipart.com/preview/936/725/264/phoenix-logo-legendary-creature-phoenix.jpg'
+					style={{ width: '30px', height: '30px', borderRadius: '15px' }}
+				/>
+				<form
+					onSubmit={handleSearch}
+					className='header-search'
+					style={{ marginRight: 'auto' }}
+				>
 					<IconButton type='submit' color='inherit' sx={{ color: 'wheat' }}>
 						<SearchIcon />
 					</IconButton>

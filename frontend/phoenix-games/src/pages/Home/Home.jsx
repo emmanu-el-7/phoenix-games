@@ -12,16 +12,16 @@ const Home = ({ products }) => {
 					<ProductsContainer />
 				</div>
 				<div className='row'>
-					<div className='col-lg-6 justify-content-start'>
+					<div className='top-rated'>
 						<h2 className='sectionTitle'>Top Rated</h2>
-					</div>
-					<div className='cards-grid'>
-						{products
-							.sort((a, b) => b.rating - a.rating)
-							.slice(0, 5)
-							.map((product) => (
-								<ProductCard key={product._id} product={product} />
-							))}
+						<div className='cards-grid'>
+							{products
+								.sort((a, b) => b.rating - a.rating)
+								.slice(0, 5)
+								.map((product) => (
+									<ProductCard key={product._id} product={product} />
+								))}
+						</div>
 					</div>
 				</div>
 			</div>

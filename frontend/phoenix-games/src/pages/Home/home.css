@@ -16,3 +16,7 @@ section.home .sectionTitle {
 	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 	gap: 20px;
 }
+
+.top-rated {
+	margin-top: 1.2rem;
+}
