@@ -3,7 +3,6 @@ import './productPage.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import productService from '../../services/productService';
-import cartService from '../../services/cartService';
 import {
 	Button,
 	Card,
@@ -48,15 +47,6 @@ const ProductPage = ({ customer_id }) => {
 		backgroundSize: 'cover',
 		backgroundPosition: 'center',
 		backgroundRepeat: 'no-repeat',
-	};
-
-	const handleAddToCart = async () => {
-		try {
-			const response = await cartService.addToCart(customer_id, product.id);
-			console.log('Product added to cart:', response);
-		} catch (error) {
-			console.error('Error adding product to cart:', error);
-		}
 	};
 
 	return (
@@ -142,7 +132,6 @@ const ProductPage = ({ customer_id }) => {
 								aria-label='add to cart'
 								className='cartBtn'
 								sx={{ color: 'var(--primary)' }}
-								onClick={handleAddToCart}
 							>
 								<AddShoppingCartIcon />
 							</IconButton>

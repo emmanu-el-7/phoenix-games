@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import ProductPage from './pages/Products/ProductPage';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
-import CartPage from './pages/Products/CartPage';
 
 class ErrorBoundary extends Component {
 	constructor(props) {
@@ -72,10 +71,6 @@ function App() {
 					<Route
 						path='/profile'
 						element={auth ? <Profile /> : <Navigate to='/login' />}
-					/>
-					<Route
-						path='/cart'
-						element={auth ? <CartPage /> : <Navigate to='/login' />}
 					/>
 				</Routes>
 			</Router>

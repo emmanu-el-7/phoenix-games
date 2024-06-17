@@ -30,17 +30,6 @@ const Cart = {
 	delete: (id) => {
 		return knex('carts').where({ id }).del();
 	},
-	getItemsByClientId: (clientId) => {
-		return knex('cart')
-			.where({ client_id: clientId })
-			.join('products', 'cart.product_id', 'products.id')
-			.select('products.*', 'cart.quantity');
-	},
-	removeFromCart: (clientId, productId) => {
-		return knex('cart')
-			.where({ client_id: clientId, product_id: productId })
-			.del();
-	},
 };
 
 module.exports = Cart;
