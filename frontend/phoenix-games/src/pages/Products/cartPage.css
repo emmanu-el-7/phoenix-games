@@ -1,16 +1,13 @@
 .cart-page {
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	padding: 20px;
-	overflow: scroll;
+	align-items: flex-start;
+	padding: 5px;
+	overflow-y: auto;
+	height: 100vh;
 }
 
 .cart-page::-webkit-scrollbar {
 	width: 0;
 	height: 0;
-}
-
-.cart-card {
-	padding: 1.5rem;
 }

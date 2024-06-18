@@ -26,7 +26,6 @@ const init = async () => {
 	server.app.db = db;
 
 	server.route(productRoutes);
-	server.route(cartRoutes);
 	server.route(customerRoutes);
 	server.route(orderRoutes);
 

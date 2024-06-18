@@ -55,6 +55,7 @@ export const useAuth = () => {
 			setCustomer(null);
 			localStorage.removeItem('token');
 			localStorage.removeItem('customer');
+			localStorage.removeItem('cart');
 		} catch (error) {
 			setError(error.message);
 		} finally {
