@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -6,8 +6,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import './productCard.css';
 import PropTypes from 'prop-types';
+import { CartContext, useCart } from '../CartContext';
 
 const ProductCard = ({ product, customer_id }) => {
+	const cart = useCart();
+	const add = (product) => () => {
+		cart.addToCart(product);
+	};
+
 	return (
 		<div className='col-xl-3 col-lg-4 col-md-6'>
 			<div className='card-container'>
@@ -49,6 +55,7 @@ const ProductCard = ({ product, customer_id }) => {
 					className='bag'
 					aria-label='add to cart'
 					sx={{ color: 'wheat' }}
+					onClick={add(product)}
 				>
 					<AddShoppingCartIcon />
 				</IconButton>

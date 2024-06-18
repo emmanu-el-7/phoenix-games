@@ -16,8 +16,11 @@ import {
 } from '@mui/icons-material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuth } from '../../hooks/useAuth';
+import { useCart } from '../CartContext';
 
 const Header = () => {
+	const { cart } = useCart();
+	const itemsCount = Object.keys(cart || {}).length;
 	const { logout } = useAuth();
 	const [query, setQuery] = useState('');
 	const navigate = useNavigate();
@@ -49,10 +52,12 @@ const Header = () => {
 					paddingRight: '20px',
 				}}
 			>
-				<img
-					src='https://p7.hiclipart.com/preview/936/725/264/phoenix-logo-legendary-creature-phoenix.jpg'
-					style={{ width: '30px', height: '30px', borderRadius: '15px' }}
-				/>
+				<NavLink to='/'>
+					<img
+						src='https://p7.hiclipart.com/preview/936/725/264/phoenix-logo-legendary-creature-phoenix.jpg'
+						style={{ width: '30px', height: '30px', borderRadius: '15px' }}
+					/>
+				</NavLink>
 				<form
 					onSubmit={handleSearch}
 					className='header-search'
@@ -81,6 +86,7 @@ const Header = () => {
 						<NavLink to='/cart'>
 							<IconButton color='inherit' sx={{ color: 'wheat' }}>
 								<ShoppingCartIcon />
+								{itemsCount > 0 && <span>({itemsCount})</span>}
 							</IconButton>
 						</NavLink>
 					</ListItem>

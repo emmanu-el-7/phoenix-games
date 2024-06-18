@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './main.css';
 import Header from '../../components/Menu/Header';
 import Home from './Home';
+import { useCart } from '../../components/CartContext';
 
 function Main() {
+	const cart = useCart();
 	const [active, setActive] = useState(false);
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
