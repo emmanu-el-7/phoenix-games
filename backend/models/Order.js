@@ -32,21 +32,23 @@ const Order = {
 	},
 	checkout: async (clientId, items) => {
 		const timestamp = new Date().toISOString();
-
 		const trx = await knex.transaction();
-
 		try {
 			const [order] = await trx('orders')
 				.insert({
 					client_id: clientId,
-					items: JSON.stringify(items),
 					created_at: timestamp,
 					updated_at: timestamp,
 				})
 				.returning('*');
 
-			await trx('carts').where({ client_id: clientId }).del();
+			const orderItems = items.map((item) => ({
+				order_id: order.id,
+				product_name: item.product_name,
+				price: item.price,
+			}));
 
+			await trx('order_items').insert(orderItems);
 			await trx.commit();
 
 			return order;

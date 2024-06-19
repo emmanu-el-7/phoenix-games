@@ -5,7 +5,8 @@ const listOrders = async (request, h) => {
 		const orders = await Order.getAll();
 		return h.response(orders).code(200);
 	} catch (error) {
-		return h.response(error).code(500);
+		console.error('Error listing orders:', error);
+		return h.response({ error: 'Failed to list orders' }).code(500);
 	}
 };
 
@@ -17,28 +18,44 @@ const showOrder = async (request, h) => {
 		}
 		return h.response(order).code(200);
 	} catch (error) {
-		return h.response(error).code(500);
+		console.error('Error fetching order:', error);
+		return h.response({ error: 'Failed to fetch order' }).code(500);
 	}
 };
 
 const createOrder = async (request, h) => {
+	const { client_id, items } = request.payload;
+
+	if (!client_id || !items || !Array.isArray(items) || items.length === 0) {
+		return h.response({ error: 'Invalid order data' }).code(400);
+	}
+
 	try {
-		const newOrder = await Order.create(request.payload);
+		const newOrder = await Order.create({ client_id, items });
 		return h.response(newOrder).code(201);
 	} catch (error) {
-		return h.response(error).code(500);
+		console.error('Error creating order:', error);
+		return h.response({ error: 'Failed to create order' }).code(500);
 	}
 };
 
 const updateOrder = async (request, h) => {
+	const { id } = request.params;
+	const { client_id, items } = request.payload;
+
+	if (!client_id || !items || !Array.isArray(items) || items.length === 0) {
+		return h.response({ error: 'Invalid order data' }).code(400);
+	}
+
 	try {
-		const updatedOrder = await Order.update(request.params.id, request.payload);
+		const updatedOrder = await Order.update(id, { client_id, items });
 		if (!updatedOrder) {
 			return h.response({ error: 'Order not found' }).code(404);
 		}
 		return h.response(updatedOrder).code(200);
 	} catch (error) {
-		return h.response(error).code(500);
+		console.error('Error updating order:', error);
+		return h.response({ error: 'Failed to update order' }).code(500);
 	}
 };
 
@@ -50,17 +67,39 @@ const deleteOrder = async (request, h) => {
 		}
 		return h.response({ success: true }).code(200);
 	} catch (error) {
-		return h.response(error).code(500);
+		console.error('Error deleting order:', error);
+		return h.response({ error: 'Failed to delete order' }).code(500);
 	}
 };
 
-const checkout = async (request, h) => {
+const checkout = async (clientId, items) => {
+	const timestamp = new Date().toISOString();
+	const trx = await knex.transaction();
+
 	try {
-		const { clientId, items } = request.payload;
-		const newOrder = await Order.checkout(clientId, items);
-		return h.response(newOrder).code(201);
+		const [order] = await trx('orders')
+			.insert({
+				client_id: clientId,
+				created_at: timestamp,
+				updated_at: timestamp,
+			})
+			.returning('*');
+
+		const orderItems = items.map((item) => ({
+			order_id: order.id,
+			product_name: item.product_name,
+			price: item.price,
+		}));
+
+		await trx('order_items').insert(orderItems);
+
+		await trx.commit();
+
+		return order;
 	} catch (error) {
-		return h.response(error).code(500);
+		await trx.rollback();
+		console.error('Error during checkout:', error);
+		throw error;
 	}
 };
 

@@ -7,11 +7,22 @@ const OrderItems = {
 	getById: (id) => {
 		return knex('order_items').where({ id }).first();
 	},
-	create: (product) => {
-		return knex('order_items').insert(product).returning('*');
+	getByOrderId: (orderId) => {
+		return knex('order_items').where({ order_id: orderId }).select('*');
 	},
-	update: (id, product) => {
-		return knex('order_items').where({ id }).update(product).returning('*');
+	create: (orderItem) => {
+		const { order_id, product_name, price } = orderItem;
+
+		if (!order_id || !product_name || !price) {
+			throw new Error(
+				'Todos os campos são obrigatórios: order_id, product_name, price'
+			);
+		}
+
+		return knex('order_items').insert(orderItem).returning('*');
+	},
+	update: (id, orderItem) => {
+		return knex('order_items').where({ id }).update(orderItem).returning('*');
 	},
 	delete: (id) => {
 		return knex('order_items').where({ id }).del();
