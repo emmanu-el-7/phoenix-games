@@ -4,7 +4,7 @@ import './home.css';
 import ProductsContainer from '../../components/Menu/ProductsContainer';
 import ProductCard from '../../components/Menu/ProductCard';
 
-const Home = ({ products }) => {
+const Home = ({ products, orderData }) => {
 	return (
 		<section id='home' className='home active'>
 			<div className='container-fluid'>
@@ -19,7 +19,11 @@ const Home = ({ products }) => {
 								.sort((a, b) => b.rating - a.rating)
 								.slice(0, 5)
 								.map((product) => (
-									<ProductCard key={product._id} product={product} />
+									<ProductCard
+										key={product._id}
+										product={product}
+										order={orderData}
+									/>
 								))}
 						</div>
 					</div>

@@ -61,12 +61,13 @@ export const CartProvider = ({ children }) => {
 	};
 
 	return (
-		<CartContext.Provider value={{ cart, addToCart }}>
+		<CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
 			{children}
 		</CartContext.Provider>
 	);
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => {
 	const context = useContext(CartContext);
 	if (context === undefined) {
