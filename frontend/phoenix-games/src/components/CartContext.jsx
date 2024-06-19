@@ -14,11 +14,10 @@ export const CartProvider = ({ children }) => {
 		}
 	}, []);
 
-	const addToCart = async (product, orders) => {
+	const addToCart = async (product, order) => {
 		try {
-			const orderId = orders.id;
-			const itemData = { productId: product.id, quantity: 1 };
-			await OrderItemsService.addOrderItem(orderId, itemData);
+			const itemData = { product_id: product.id, quantity: 1 };
+			await OrderItemsService.addOrderItem(order.id, itemData);
 
 			setCart((oldCart) => {
 				const quantity = oldCart[product.id] ? oldCart[product.id].quantity : 0;
@@ -37,21 +36,17 @@ export const CartProvider = ({ children }) => {
 		}
 	};
 
-	const removeFromCart = async (product, orders) => {
+	const removeFromCart = async (product, order) => {
 		try {
-			const orderId = orders.id;
-			const itemData = { productId: product.id, quantity: 1 };
-			await OrderItemsService.removeOrderItem(orderId, itemData);
+			await OrderItemsService.removeOrderItem(order.id, product.id);
 
 			setCart((oldCart) => {
-				const quantity = oldCart[product.id] ? oldCart[product.id].quantity : 0;
-				const newCart = {
-					...oldCart,
-					[product.id]: {
-						quantity: quantity + 1,
-						product,
-					},
-				};
+				const newCart = { ...oldCart };
+				if (newCart[product.id].quantity === 1) {
+					delete newCart[product.id];
+				} else {
+					newCart[product.id].quantity -= 1;
+				}
 				window.localStorage.setItem('cart', JSON.stringify(newCart));
 				return newCart;
 			});
@@ -67,7 +62,6 @@ export const CartProvider = ({ children }) => {
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => {
 	const context = useContext(CartContext);
 	if (context === undefined) {

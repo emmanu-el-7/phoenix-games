@@ -13,7 +13,7 @@ module.exports = [
 	},
 	{
 		method: 'DELETE',
-		path: '/order_items/{id}',
+		path: '/orders/{order_id}/items/{product_id}',
 		handler: orderItemsController.removeOrderItem,
 	},
 ];

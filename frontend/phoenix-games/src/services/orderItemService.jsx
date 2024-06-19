@@ -17,9 +17,12 @@ const OrderItemsService = {
 		}
 		return response.json();
 	},
-	removeOrderItem: async (itemId) => {
+	removeOrderItem: async (orderId, productId) => {
 		const config = requestConfig('DELETE');
-		const response = await fetch(`${api}/order_items/${itemId}`, config);
+		const response = await fetch(
+			`${api}/orders/${orderId}/items/${productId}`,
+			config
+		);
 		if (!response.ok) {
 			throw new Error('Failed to delete order item');
 		}

@@ -27,6 +27,18 @@ const OrderItems = {
 	delete: (id) => {
 		return knex('order_items').where({ id }).del();
 	},
+	addToCart: (orderItem) => {
+		const { order_id, product_id, quantity } = orderItem;
+		if (!order_id || !product_id || !quantity) {
+			throw new Error(
+				'Todos os campos são obrigatórios: order_id, product_id, quantity'
+			);
+		}
+		return knex('order_items').insert(orderItem).returning('*');
+	},
+	removeFromCart: (order_id, product_id) => {
+		return knex('order_items').where({ order_id, product_id }).del();
+	},
 };
 
 module.exports = OrderItems;

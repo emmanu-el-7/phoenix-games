@@ -5,6 +5,8 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "cors": "^2.8.5",
+    "docker": "^1.0.0",
+    "docker-compose": "^0.24.8",
     "dotenv": "^16.4.5",
     "hapi-cors": "^1.0.3",
     "knex": "^3.1.0",

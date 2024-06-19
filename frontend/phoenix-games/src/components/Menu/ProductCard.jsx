@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'; // Importando o ícone de remover do carrinho
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
-import './productCard.css';
 import PropTypes from 'prop-types';
 import OrderItemsService from '../../services/orderItemService';
-import { api, requestConfig } from '../../utils/config';
+import { useCart } from '../CartContext';
 import { useAuth } from '../../hooks/useAuth';
+import { api, requestConfig } from '../../utils/config';
 
 const ProductCard = ({ product }) => {
-	const [orders, setOrders] = useState([]);
+	const { addToCart, removeFromCart } = useCart();
 	const { customer } = useAuth();
+	const [order, setOrder] = useState(null);
 
-	const createOrder = async (orderData) => {
+	const createOrder = async () => {
 		try {
-			const data = { ...orderData, customer };
-			console.log('Order Payload:', data);
+			const data = { customer_id: customer.id };
 			const config = requestConfig('POST', data);
-			console.log('Request Config:', config);
 
 			const response = await fetch(`${api}/orders`, config);
 			if (!response.ok) {
@@ -32,22 +31,19 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
-	const handleAddToCart = async (product, orders) => {
-		try {
-			let order_id;
+	const handleAddToCart = async () => {
+		if (!order) {
+			const newOrder = await createOrder();
+			setOrder(newOrder);
+			addToCart(product, newOrder);
+		} else {
+			addToCart(product, order);
+		}
+	};
 
-			if (!orders || orders.length === 0) {
-				const newOrder = await createOrder({});
-				order_id = newOrder.id;
-				setOrders([newOrder]);
-			} else {
-				order_id = orders[0].id;
-			}
-
-			const itemData = { product_id: product.id, quantity: 1 };
-			await OrderItemsService.addOrderItem(order_id, itemData);
-		} catch (error) {
-			console.error('Failed to add item to cart:', error);
+	const handleRemoveFromCart = async () => {
+		if (order) {
+			removeFromCart(product, order);
 		}
 	};
 
@@ -55,46 +51,28 @@ const ProductCard = ({ product }) => {
 		<div className='col-xl-3 col-lg-4 col-md-6'>
 			<div className='card-container'>
 				<img src={product.image} alt={`${product.name} capa`} />
-				<IconButton
-					aria-label='add to favorites'
-					style={{ color: 'wheat' }}
-					className='favoritesBtn'
-				>
+				<IconButton aria-label='add to favorites' className='favoritesBtn'>
 					<FavoriteIcon />
 				</IconButton>
-				<Link
-					href={`/product/${product.id}`}
-					aria-label={`Compre ${product.name}`}
-					sx={{ textDecoration: 'none' }}
-				>
-					<Typography
-						variant='body1'
-						className='product-name'
-						sx={{
-							color: 'wheat',
-							textDecoration: 'none',
-						}}
-						component='a'
-						href={`/product/${product.id}`}
-						aria-label={`Compre ${product.name}`}
-					>
-						{product.name}
-					</Typography>
-				</Link>
-				<Typography
-					variant='body1'
-					className='product-price'
-					sx={{ color: 'wheat' }}
-				>
+				<Typography variant='body1' className='product-name' component='a'>
+					{product.name}
+				</Typography>
+				<Typography variant='body1' className='product-price'>
 					R$ {Number(product.price).toFixed(2)}
 				</Typography>
 				<IconButton
 					className='bag'
 					aria-label='add to cart'
-					sx={{ color: 'wheat' }}
-					onClick={() => handleAddToCart(product, orders)}
+					onClick={handleAddToCart}
 				>
 					<AddShoppingCartIcon />
+				</IconButton>
+				<IconButton
+					className='bag'
+					aria-label='remove from cart'
+					onClick={handleRemoveFromCart}
+				>
+					<RemoveShoppingCartIcon />
 				</IconButton>
 			</div>
 		</div>
