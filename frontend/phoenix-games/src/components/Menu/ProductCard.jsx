@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -6,7 +6,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import './productCard.css';
 import PropTypes from 'prop-types';
-import { CartContext, useCart } from '../CartContext';
+import { useCart } from '../CartContext';
 
 const ProductCard = ({ product, customer_id }) => {
 	const cart = useCart();
