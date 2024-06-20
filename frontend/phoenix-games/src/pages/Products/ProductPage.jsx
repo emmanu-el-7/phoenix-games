@@ -16,7 +16,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Header from '../../components/Menu/Header';
 
-const ProductPage = ({ customer_id }) => {
+const ProductPage = () => {
 	const { id } = useParams();
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [product, setProduct] = useState(null);

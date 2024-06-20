@@ -20,53 +20,6 @@ const Customer = {
 	delete: (id) => {
 		return knex('customers').where({ id }).del();
 	},
-	addFavorite: async (customerId, productId) => {
-		try {
-			const customer = await knex('customers')
-				.where({ id: customerId })
-				.first();
-			if (!customer) {
-				throw new Error(`Customer with ID ${customer.id} not found`);
-			}
-
-			let favorites = customer.favorites || [];
-			if (!Array.isArray(favorites)) {
-				favorites = [];
-			}
-
-			if (!favorites.includes(productId)) {
-				favorites.push(productId);
-				await knex('customers')
-					.where({ id: customerId })
-					.update({ favorites })
-					.returning('*');
-			}
-			return favorites;
-		} catch (error) {
-			console.error('Error in addFavorite:', error);
-			throw error;
-		}
-	},
-	getFavorites: async (customerId) => {
-		try {
-			const customer = await knex('customers')
-				.where({ id: customerId })
-				.first();
-			if (!customer) {
-				throw new Error(`Customer with ID ${customer.id} not found`);
-			}
-
-			let favorites = customer.favorites || [];
-			if (!Array.isArray(favorites)) {
-				favorites = [];
-			}
-
-			return favorites;
-		} catch (error) {
-			console.error('Error in getFavorites:', error);
-			throw error;
-		}
-	},
 };
 
 module.exports = Customer;

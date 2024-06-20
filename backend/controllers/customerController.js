@@ -181,31 +181,6 @@ const deleteCustomer = async (request, h) => {
 	}
 };
 
-const addFavorite = async (request, h) => {
-	const { id: customerId } = request.params;
-	const { productId } = request.payload;
-
-	try {
-		const favorites = await Customer.addFavorite(customerId, productId);
-		return h.response({ favorites }).code(200);
-	} catch (error) {
-		console.error('Error adding favorite:', error);
-		return h.response({ errors: ['Failed to add favorite'] }).code(500);
-	}
-};
-
-const getFavorites = async (request, h) => {
-	const { id: customerId } = request.params;
-
-	try {
-		const favorites = await Customer.getFavorites(customerId);
-		return h.response(favorites).code(200);
-	} catch (error) {
-		console.error('Error fetching favorites:', error);
-		return h.response({ errors: ['Failed to fetch favorites'] }).code(500);
-	}
-};
-
 module.exports = {
 	register,
 	login,
@@ -215,6 +190,4 @@ module.exports = {
 	getCustomerById,
 	getAllCustomers,
 	deleteCustomer,
-	addFavorite,
-	getFavorites,
 };

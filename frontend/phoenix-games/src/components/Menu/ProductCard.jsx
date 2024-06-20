@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useCart } from '../CartContext';
 import { useAuth } from '../../hooks/useAuth';
-import { api, requestConfig } from '../../utils/config';
+import { api } from '../../utils/config';
 import './productCard.css';
 
 const ProductCard = ({ product }) => {
@@ -17,47 +17,48 @@ const ProductCard = ({ product }) => {
 
 	const createOrder = async () => {
 		try {
+			if (!customer || !customer.id) {
+				throw new Error('Customer ID is missing or invalid');
+			}
+
 			const data = { customer_id: customer.id };
-			const config = requestConfig('POST', data);
+			const config = {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			};
 
 			const response = await fetch(`${api}/orders`, config);
 			if (!response.ok) {
 				throw new Error('Failed to create order');
 			}
-			return response.json();
+
+			const newOrder = await response.json();
+			if (!newOrder || !newOrder.order_id) {
+				throw new Error('Order ID is missing in the response');
+			}
+
+			return newOrder;
 		} catch (error) {
-			console.error('Failed to create order:', error);
+			console.error('Failed to create order:', error.message);
 			throw error;
 		}
 	};
 
 	const handleAddToCart = async () => {
-		if (!order) {
-			const newOrder = await createOrder();
-			setOrder(newOrder);
-			addToCart(product, newOrder);
-		} else {
-			addToCart(product, order);
-		}
-	};
-
-	const handleAddToFavorites = async () => {
 		try {
-			const data = { productId: product.id };
-			const config = requestConfig('POST', data);
-
-			const response = await fetch(
-				`${api}/customers/${customer.id}/favorites`,
-				config
-			);
-			if (!response.ok) {
-				const errorData = await response.json();
-				console.error('Server responded with error:', errorData);
-				throw new Error('Failed to add to favorites');
+			if (!order) {
+				const newOrder = await createOrder();
+				setOrder(newOrder);
+				console.log('New Order ID:', newOrder.order.id);
+				addToCart(product, newOrder.order.id);
+			} else {
+				addToCart(product, order.order.id);
 			}
-			console.log('Product added to favorites');
 		} catch (error) {
-			console.error('Failed to add to favorites:', error);
+			console.error('Failed to add item to cart:', error.message);
 		}
 	};
 
@@ -69,7 +70,6 @@ const ProductCard = ({ product }) => {
 					aria-label='add to favorites'
 					className='favoritesBtn'
 					style={{ color: 'wheat' }}
-					onClick={handleAddToFavorites}
 				>
 					<FavoriteIcon />
 				</IconButton>

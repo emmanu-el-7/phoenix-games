@@ -24,14 +24,17 @@ const showOrder = async (request, h) => {
 };
 
 const createOrder = async (request, h) => {
-	const { client_id, items } = request.payload;
+	const { customer_id } = request.payload;
 
-	if (!client_id || !items || !Array.isArray(items) || items.length === 0) {
+	if (!customer_id) {
 		return h.response({ error: 'Invalid order data' }).code(400);
 	}
 
 	try {
-		const newOrder = await Order.create({ client_id, items });
+		const newOrder = await Order.create({ customer_id });
+		console.log('newOrder', newOrder);
+		console.log('customer_id', customer_id);
+
 		return h.response(newOrder).code(201);
 	} catch (error) {
 		console.error('Error creating order:', error);
@@ -41,14 +44,14 @@ const createOrder = async (request, h) => {
 
 const updateOrder = async (request, h) => {
 	const { id } = request.params;
-	const { client_id, items } = request.payload;
+	const { customer_id, items } = request.payload;
 
-	if (!client_id || !items || !Array.isArray(items) || items.length === 0) {
+	if (!customer_id || !items || !Array.isArray(items) || items.length === 0) {
 		return h.response({ error: 'Invalid order data' }).code(400);
 	}
 
 	try {
-		const updatedOrder = await Order.update(id, { client_id, items });
+		const updatedOrder = await Order.update(id, { customer_id, items });
 		if (!updatedOrder) {
 			return h.response({ error: 'Order not found' }).code(404);
 		}
@@ -72,14 +75,14 @@ const deleteOrder = async (request, h) => {
 	}
 };
 
-const checkout = async (clientId, items) => {
+const checkout = async (customerId, items) => {
 	const timestamp = new Date().toISOString();
 	const trx = await knex.transaction();
 
 	try {
 		const [order] = await trx('orders')
 			.insert({
-				client_id: clientId,
+				customer_id: customerId,
 				created_at: timestamp,
 				updated_at: timestamp,
 			})

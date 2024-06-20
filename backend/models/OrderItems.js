@@ -11,11 +11,11 @@ const OrderItems = {
 		return knex('order_items').where({ order_id: orderId }).select('*');
 	},
 	create: (orderItem) => {
-		const { order_id, product_name, price } = orderItem;
+		const { order_id, product_id, price } = orderItem;
 
-		if (!order_id || !product_name || !price) {
+		if (!order_id || !product_id || !price) {
 			throw new Error(
-				'Todos os campos são obrigatórios: order_id, product_name, price'
+				'Todos os campos são obrigatórios: order_id, product_id, price'
 			);
 		}
 
@@ -28,11 +28,9 @@ const OrderItems = {
 		return knex('order_items').where({ id }).del();
 	},
 	addToCart: (orderItem) => {
-		const { order_id, product_id, quantity } = orderItem;
-		if (!order_id || !product_id || !quantity) {
-			throw new Error(
-				'Todos os campos são obrigatórios: order_id, product_id, quantity'
-			);
+		const { order_id, product_id } = orderItem;
+		if (!order_id || !product_id) {
+			throw new Error('Todos os campos são obrigatórios: order_id, product_id');
 		}
 		return knex('order_items').insert(orderItem).returning('*');
 	},

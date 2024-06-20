@@ -43,14 +43,4 @@ module.exports = [
 		path: '/customer/{id}',
 		handler: customerController.deleteCustomer,
 	},
-	{
-		method: 'POST',
-		path: '/customers/{id}/favorites',
-		handler: customerController.addFavorite,
-	},
-	{
-		method: 'GET',
-		path: '/customers/{id}/favorites',
-		handler: customerController.getFavorites,
-	},
 ];

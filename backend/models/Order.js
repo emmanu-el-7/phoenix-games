@@ -12,8 +12,7 @@ const Order = {
 		return knex('orders')
 			.insert({
 				...order,
-				created_at: timestamp,
-				updated_at: timestamp,
+				order_date: timestamp,
 			})
 			.returning('*');
 	},
@@ -30,13 +29,13 @@ const Order = {
 	delete: (id) => {
 		return knex('orders').where({ id }).del();
 	},
-	checkout: async (clientId, items) => {
+	checkout: async (customerId, items) => {
 		const timestamp = new Date().toISOString();
 		const trx = await knex.transaction();
 		try {
 			const [order] = await trx('orders')
 				.insert({
-					client_id: clientId,
+					customer_id: customerId,
 					created_at: timestamp,
 					updated_at: timestamp,
 				})
