@@ -32,6 +32,10 @@
 	transition: 0.3s;
 }
 
+.card-container .favoritesBtn:hover {
+	background: transparent;
+}
+
 .card-container .product-name {
 	font-family: 'Poppins';
 	text-transform: uppercase;

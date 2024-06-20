@@ -40,10 +40,30 @@ const getCustomerDetails = async (id) => {
 	}
 };
 
+const getCustomerFavorites = async (customerId) => {
+	const config = requestConfig('GET');
+
+	try {
+		const url = new URL(`${api}/customers/${customerId}/favorites`);
+
+		const response = await fetch(url, config);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		return response.json();
+	} catch (error) {
+		console.error('Fetch error:', error);
+		throw error;
+	}
+};
+
 const customerService = {
 	profile,
 	updateProfile,
 	getCustomerDetails,
+	getCustomerFavorites,
 };
 
 export default customerService;

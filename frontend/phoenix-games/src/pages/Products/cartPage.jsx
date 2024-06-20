@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import './cartPage.css';
 import { useEffect, useState } from 'react';
 import {
@@ -7,18 +8,26 @@ import {
 	Toolbar,
 	List,
 	ListItem,
-	ListItemText,
 	CardMedia,
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
 import Header from '../../components/Menu/Header';
 import { useCart } from '../../components/CartContext';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-const CartPage = () => {
+const CartPage = ({ product }) => {
 	const { customer, loading, error } = useAuth();
 	const [customerDetails, setCustomerDetails] = useState(null);
-	const { cart } = useCart();
+	const { cart, removeFromCart } = useCart();
+	const [order, setOrder] = useState(null);
+
+	const handleRemoveFromCart = async () => {
+		if (order) {
+			removeFromCart(product, order);
+		}
+	};
 
 	useEffect(() => {
 		const fetchCustomerDetails = async () => {
@@ -94,7 +103,7 @@ const CartPage = () => {
 											marginBottom: '10px',
 										}}
 									/>
-									<div>
+									<CardContent>
 										<Typography
 											variant='h6'
 											component='div'
@@ -109,7 +118,15 @@ const CartPage = () => {
 										>
 											R$ {item.product.price}
 										</Typography>
-									</div>
+										<IconButton
+											className='bag'
+											aria-label='remove from cart'
+											onClick={handleRemoveFromCart}
+											sx={{ color: 'wheat' }}
+										>
+											<RemoveShoppingCartIcon />
+										</IconButton>
+									</CardContent>
 								</ListItem>
 							))}
 						</List>

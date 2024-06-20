@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { Link } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'; // Importando o ícone de remover do carrinho
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import OrderItemsService from '../../services/orderItemService';
 import { useCart } from '../CartContext';
 import { useAuth } from '../../hooks/useAuth';
 import { api, requestConfig } from '../../utils/config';
+import './productCard.css';
 
 const ProductCard = ({ product }) => {
-	const { addToCart, removeFromCart } = useCart();
+	const { addToCart } = useCart();
 	const { customer } = useAuth();
 	const [order, setOrder] = useState(null);
 
@@ -41,9 +41,23 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
-	const handleRemoveFromCart = async () => {
-		if (order) {
-			removeFromCart(product, order);
+	const handleAddToFavorites = async () => {
+		try {
+			const data = { productId: product.id };
+			const config = requestConfig('POST', data);
+
+			const response = await fetch(
+				`${api}/customers/${customer.id}/favorites`,
+				config
+			);
+			if (!response.ok) {
+				const errorData = await response.json();
+				console.error('Server responded with error:', errorData);
+				throw new Error('Failed to add to favorites');
+			}
+			console.log('Product added to favorites');
+		} catch (error) {
+			console.error('Failed to add to favorites:', error);
 		}
 	};
 
@@ -51,28 +65,47 @@ const ProductCard = ({ product }) => {
 		<div className='col-xl-3 col-lg-4 col-md-6'>
 			<div className='card-container'>
 				<img src={product.image} alt={`${product.name} capa`} />
-				<IconButton aria-label='add to favorites' className='favoritesBtn'>
+				<IconButton
+					aria-label='add to favorites'
+					className='favoritesBtn'
+					style={{ color: 'wheat' }}
+					onClick={handleAddToFavorites}
+				>
 					<FavoriteIcon />
 				</IconButton>
-				<Typography variant='body1' className='product-name' component='a'>
-					{product.name}
-				</Typography>
-				<Typography variant='body1' className='product-price'>
+				<Link
+					href={`/product/${product.id}`}
+					aria-label={`Compre ${product.name}`}
+					sx={{ textDecoration: 'none' }}
+				>
+					<Typography
+						variant='body1'
+						className='product-name'
+						sx={{
+							color: 'wheat',
+							textDecoration: 'none',
+						}}
+						component='a'
+						href={`/product/${product.id}`}
+						aria-label={`Compre ${product.name}`}
+					>
+						{product.name}
+					</Typography>
+				</Link>
+				<Typography
+					variant='body1'
+					className='product-price'
+					sx={{ color: 'wheat' }}
+				>
 					R$ {Number(product.price).toFixed(2)}
 				</Typography>
 				<IconButton
 					className='bag'
 					aria-label='add to cart'
 					onClick={handleAddToCart}
+					sx={{ color: 'wheat' }}
 				>
 					<AddShoppingCartIcon />
-				</IconButton>
-				<IconButton
-					className='bag'
-					aria-label='remove from cart'
-					onClick={handleRemoveFromCart}
-				>
-					<RemoveShoppingCartIcon />
 				</IconButton>
 			</div>
 		</div>

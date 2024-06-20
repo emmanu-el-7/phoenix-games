@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import {
 	Search as SearchIcon,
-	Home as HomeIcon,
 	Person as PersonIcon,
 	ExitToApp as ExitToAppIcon,
 } from '@mui/icons-material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../CartContext';
@@ -87,6 +87,13 @@ const Header = () => {
 						<NavLink to='/profile'>
 							<IconButton color='inherit' sx={{ color: 'wheat' }}>
 								<PersonIcon />
+							</IconButton>
+						</NavLink>
+					</ListItem>
+					<ListItem sx={{ padding: 0 }}>
+						<NavLink to='/favorites'>
+							<IconButton color='inherit' sx={{ color: 'wheat' }}>
+								<FavoriteIcon />
 							</IconButton>
 						</NavLink>
 					</ListItem>

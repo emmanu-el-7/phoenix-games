@@ -15,6 +15,7 @@ import ProductPage from './pages/Products/ProductPage';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import CartPage from './pages/Products/cartPage';
+import FavsPage from './pages/Profile/FavsPage';
 
 class ErrorBoundary extends Component {
 	constructor(props) {
@@ -76,6 +77,10 @@ function App() {
 					<Route
 						path='/cart'
 						element={auth ? <CartPage /> : <Navigate to='/login' />}
+					/>
+					<Route
+						path='/favorites'
+						element={auth ? <FavsPage /> : <Navigate to='/login' />}
 					/>
 				</Routes>
 			</Router>

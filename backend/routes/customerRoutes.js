@@ -1,4 +1,6 @@
+const path = require('path');
 const customerController = require('../controllers/customerController');
+const { options } = require('joi');
 
 module.exports = [
 	{
@@ -40,5 +42,15 @@ module.exports = [
 		method: 'DELETE',
 		path: '/customer/{id}',
 		handler: customerController.deleteCustomer,
+	},
+	{
+		method: 'POST',
+		path: '/customers/{id}/favorites',
+		handler: customerController.addFavorite,
+	},
+	{
+		method: 'GET',
+		path: '/customers/{id}/favorites',
+		handler: customerController.getFavorites,
 	},
 ];

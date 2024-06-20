@@ -7,6 +7,9 @@ const Product = {
 	getById: (id) => {
 		return knex('products').where({ id }).first();
 	},
+	getByIds: (ids) => {
+		return knex('products').whereIn('id', ids).select('*');
+	},
 	create: (product) => {
 		return knex('products').insert(product).returning('*');
 	},
