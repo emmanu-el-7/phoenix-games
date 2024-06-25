@@ -57,10 +57,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<Main />} />
 					<Route path='/login' element={<Login />} />
-					<Route
-						path='/register'
-						element={!auth ? <Register /> : <Navigate to='/' />}
-					/>
+					<Route path='/register' element={<Register />} />
 					<Route
 						path='/product/:id'
 						element={auth ? <ProductPage /> : <Navigate to='/login' />}
