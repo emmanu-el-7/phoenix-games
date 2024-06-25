@@ -19,9 +19,9 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 const CartPage = () => {
 	const { customer, loading, error } = useAuth();
-	const [customerDetails, setCustomerDetails] = useState(null);
+	const [setCustomerDetails] = useState(null);
 	const { cart, removeFromCart } = useCart();
-	const [order, setOrder] = useState(null);
+	const [order] = useState(null);
 
 	const handleRemoveFromCart = async (product) => {
 		if (order) {
