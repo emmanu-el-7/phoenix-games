@@ -102,7 +102,7 @@ const ProductCard = ({ product }) => {
 				<IconButton
 					className='bag'
 					aria-label='add to cart'
-					onClick={handleAddToCart}
+					onClick={() => addToCart(product)}
 					sx={{ color: 'wheat' }}
 				>
 					<AddShoppingCartIcon />

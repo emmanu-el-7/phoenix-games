@@ -106,6 +106,21 @@ const checkout = async (customerId, items) => {
 	}
 };
 
+const getCurrentOrder = async (request, h) => {
+	const { customer_id } = request.query;
+
+	try {
+		const currentOrder = await Order.getCurrentOrder(customer_id);
+		if (!currentOrder) {
+			return h.response({ error: 'No current order found' }).code(404);
+		}
+		return h.response(currentOrder).code(200);
+	} catch (error) {
+		console.error('Error fetching current order:', error);
+		return h.response({ error: 'Failed to fetch current order' }).code(500);
+	}
+};
+
 module.exports = {
 	listOrders,
 	showOrder,
@@ -113,4 +128,5 @@ module.exports = {
 	updateOrder,
 	deleteOrder,
 	checkout,
+	getCurrentOrder,
 };

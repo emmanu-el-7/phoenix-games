@@ -7,14 +7,18 @@ const Order = {
 	getById: (id) => {
 		return knex('orders').where({ id }).first();
 	},
-	create: (order) => {
+	getCurrentOrder: (customer_id) => {
+		return knex('orders').where({ customer_id, status: 'open' }).first();
+	},
+	create: (orders) => {
 		const timestamp = new Date().toISOString();
 		return knex('orders')
 			.insert({
-				...order,
+				...orders,
 				order_date: timestamp,
 			})
-			.returning('*');
+			.returning('*')
+			.then((results) => results[0]);
 	},
 	update: (id, order) => {
 		const timestamp = new Date().toISOString();

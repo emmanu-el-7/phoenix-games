@@ -31,4 +31,9 @@ module.exports = [
 		path: '/orders/checkout',
 		handler: orderController.checkout,
 	},
+	{
+		method: 'GET',
+		path: '/orders/current',
+		handler: orderController.getCurrentOrder,
+	},
 ];

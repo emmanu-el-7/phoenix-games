@@ -17,15 +17,15 @@ import Header from '../../components/Menu/Header';
 import { useCart } from '../../components/CartContext';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-const CartPage = ({ product }) => {
+const CartPage = () => {
 	const { customer, loading, error } = useAuth();
 	const [customerDetails, setCustomerDetails] = useState(null);
 	const { cart, removeFromCart } = useCart();
 	const [order, setOrder] = useState(null);
 
-	const handleRemoveFromCart = async () => {
+	const handleRemoveFromCart = async (product) => {
 		if (order) {
-			removeFromCart(product, order);
+			removeFromCart(product);
 		}
 	};
 
@@ -81,9 +81,9 @@ const CartPage = ({ product }) => {
 							Seu Carrinho
 						</Typography>
 						<List>
-							{Object.values(cart).map((item) => (
+							{cart.map((item) => (
 								<ListItem
-									key={item.product.id}
+									key={item.id}
 									sx={{
 										display: 'flex',
 										alignItems: 'flex-start',
@@ -93,8 +93,8 @@ const CartPage = ({ product }) => {
 								>
 									<CardMedia
 										component='img'
-										image={item.product.image}
-										alt={item.product.name}
+										image={item.image}
+										alt={item.name}
 										sx={{
 											width: 200,
 											height: 200,
@@ -109,19 +109,19 @@ const CartPage = ({ product }) => {
 											component='div'
 											sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 										>
-											{item.product.name}
+											{item.name}
 										</Typography>
 										<Typography
 											variant='body1'
 											component='div'
 											sx={{ color: 'wheat', fontFamily: 'Poppins' }}
 										>
-											R$ {item.product.price}
+											R$ {item.price}
 										</Typography>
 										<IconButton
 											className='bag'
 											aria-label='remove from cart'
-											onClick={handleRemoveFromCart}
+											onClick={() => handleRemoveFromCart(item)}
 											sx={{ color: 'wheat' }}
 										>
 											<RemoveShoppingCartIcon />

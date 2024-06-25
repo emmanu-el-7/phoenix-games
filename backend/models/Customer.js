@@ -1,5 +1,4 @@
 const knex = require('../config/db');
-const { getFavorites } = require('../controllers/customerController');
 
 const Customer = {
 	getAll: () => {
