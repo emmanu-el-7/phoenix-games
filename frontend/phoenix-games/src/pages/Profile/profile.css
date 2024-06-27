@@ -13,7 +13,7 @@
 }
 
 .profile-card {
-	max-width: 450px;
+	max-width: 30%;
 	width: 100%;
 	background-color: var(--bgColor);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

@@ -13,10 +13,11 @@ import {
 	Toolbar,
 } from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import Header from '../../components/Menu/Header';
+import { useCart } from '../../components/CartContext';
 
 const ProductPage = () => {
+	const { addToCart } = useCart();
 	const { id } = useParams();
 	const [showTrailer, setShowTrailer] = useState(false);
 	const [product, setProduct] = useState(null);
@@ -77,7 +78,7 @@ const ProductPage = () => {
 							></iframe>
 						</div>
 					)}
-					<CardContent className='product-card'>
+					<CardContent className='card-content'>
 						<Button
 							onClick={toggleTrailer}
 							className='play-button'
@@ -122,16 +123,10 @@ const ProductPage = () => {
 						</div>
 						<div className='product-actions'>
 							<IconButton
-								aria-label='add to favorites'
-								className='favoriteBtn'
-								sx={{ color: 'var(--primary)' }}
-							>
-								<FavoriteIcon />
-							</IconButton>
-							<IconButton
 								aria-label='add to cart'
 								className='cartBtn'
 								sx={{ color: 'var(--primary)' }}
+								onClick={() => addToCart(product)}
 							>
 								<AddShoppingCartIcon />
 							</IconButton>

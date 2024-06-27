@@ -3,6 +3,7 @@ import React from 'react';
 import './home.css';
 import ProductsContainer from '../../components/Menu/ProductsContainer';
 import ProductCard from '../../components/Menu/ProductCard';
+import { Grid } from '@mui/material';
 
 const Home = ({ products, orderData }) => {
 	return (
@@ -14,7 +15,11 @@ const Home = ({ products, orderData }) => {
 				<div className='row'>
 					<div className='top-rated'>
 						<h2 className='sectionTitle'>Top Rated</h2>
-						<div className='cards-grid'>
+						<Grid
+							className='cards-grid'
+							direction={{ xs: 'column', sm: 'row' }}
+							spacing={{ xs: 1, sm: 2, md: 4 }}
+						>
 							{products
 								.sort((a, b) => b.rating - a.rating)
 								.slice(0, 5)
@@ -25,7 +30,7 @@ const Home = ({ products, orderData }) => {
 										order={orderData}
 									/>
 								))}
-						</div>
+						</Grid>
 					</div>
 				</div>
 			</div>

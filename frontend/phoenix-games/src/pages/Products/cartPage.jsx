@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import './cartPage.css';
 import { useEffect, useState } from 'react';
 import {
@@ -15,9 +14,10 @@ import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
 import Header from '../../components/Menu/Header';
 import { useCart } from '../../components/CartContext';
+import PropTypes from 'prop-types';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-const CartPage = () => {
+const CartPage = ({ product }) => {
 	const { customer, loading, error } = useAuth();
 	const [setCustomerDetails] = useState(null);
 	const { cart, removeFromCart } = useCart();
@@ -69,7 +69,7 @@ const CartPage = () => {
 			</Toolbar>
 			<div className='cart-page'>
 				<Card className='cart-card' sx={{ borderRadius: '8px' }}>
-					<CardContent className='profile-card'>
+					<CardContent className='card-content'>
 						<Typography
 							variant='h5'
 							component='div'
@@ -135,6 +135,15 @@ const CartPage = () => {
 			</div>
 		</div>
 	);
+};
+
+CartPage.propTypes = {
+	product: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		name: PropTypes.string.isRequired,
+		image: PropTypes.string.isRequired,
+		price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	}).isRequired,
 };
 
 export default CartPage;

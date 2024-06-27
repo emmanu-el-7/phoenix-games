@@ -6,14 +6,35 @@ import {
 	CardContent,
 	Typography,
 	Toolbar,
+	Button,
 } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
 import Header from '../../components/Menu/Header';
+import customerService from '../../services/customerService';
 
 const Profile = () => {
 	const { customer, loading, error } = useAuth();
 	const [customerDetails, setCustomerDetails] = useState(null);
+
+	const handleEditProfile = async () => {
+		if (customer && customer.id) {
+			try {
+				const token = customer.token;
+				const edit = await customerService.updateProfile(
+					{ name: 'updated name' },
+					token
+				);
+				console.log(edit);
+				setCustomerDetails((prevDetails) => ({
+					...prevDetails,
+					name: 'updated name',
+				}));
+			} catch (err) {
+				console.error('Failed to edit profile:', err);
+			}
+		}
+	};
 
 	useEffect(() => {
 		const fetchCustomerDetails = async () => {
@@ -69,7 +90,7 @@ const Profile = () => {
 						className='profile-image'
 						sx={{ borderRadius: '8px 8px 0 0' }}
 					/>
-					<CardContent className='profile-card'>
+					<CardContent className='card-content'>
 						<Typography
 							variant='h5'
 							component='div'
@@ -84,6 +105,14 @@ const Profile = () => {
 						>
 							{customerDetails?.email || 'Email not available'}
 						</Typography>
+						<Button
+							variant='contained'
+							color='primary'
+							onClick={handleEditProfile}
+							sx={{ margin: '1rem' }}
+						>
+							Edit Profile
+						</Button>
 					</CardContent>
 				</Card>
 			</div>

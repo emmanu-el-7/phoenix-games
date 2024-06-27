@@ -18,24 +18,6 @@
 	width: 28vh;
 }
 
-.card-container .favoritesBtn {
-	position: absolute;
-	top: 10px;
-	right: 16px;
-	background: var(--bgColor);
-	padding: 5px;
-	border-radius: 0 0 0 20px;
-	color: wheat;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	transition: 0.3s;
-}
-
-.card-container .favoritesBtn:hover {
-	background: transparent;
-}
-
 .card-container .product-name {
 	font-family: 'Poppins';
 	text-transform: uppercase;
@@ -57,9 +39,7 @@
 }
 
 .card-container .bag {
-	position: absolute;
-	right: 207px;
-	bottom: 80px;
+	position: relative;
 	color: wheat;
 	background: var(--bgColor);
 	padding: 10px;
@@ -68,11 +48,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-radius: 0 20px 0 20px;
 	font-size: 1.2rem;
 	transition: 0.3s;
 }
 
 .card-container .bag:hover {
-	background: transparent;
+	color: var(--primary);
 }

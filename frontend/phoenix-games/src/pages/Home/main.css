@@ -15,8 +15,13 @@ main {
 	justify-content: space-between;
 	align-items: center;
 	gap: 30px;
-	overflow: hidden;
+	overflow: scroll;
 	transition: 0.5s;
+}
+
+main::-webkit-scrollbar {
+	width: 0;
+	height: 0;
 }
 
 .banner {

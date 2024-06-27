@@ -11,3 +11,10 @@
 	width: 0;
 	height: 0;
 }
+
+.cart-card {
+	max-width: 40%;
+	width: 100%;
+	background-color: var(--bgColor);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
