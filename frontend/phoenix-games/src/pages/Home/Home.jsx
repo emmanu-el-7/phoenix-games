@@ -22,13 +22,9 @@ const Home = ({ products, orderData }) => {
 						>
 							{products
 								.sort((a, b) => b.rating - a.rating)
-								.slice(0, 5)
+								.slice(0, 6)
 								.map((product) => (
-									<ProductCard
-										key={product._id}
-										product={product}
-										order={orderData}
-									/>
+									<ProductCard key={product._id} product={product} />
 								))}
 						</Grid>
 					</div>

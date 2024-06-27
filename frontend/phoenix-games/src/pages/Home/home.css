@@ -21,3 +21,7 @@ section.home .sectionTitle {
 .top-rated {
 	margin-top: 1.2rem;
 }
+
+.container-fluid {
+	height: 40vh;
+}
