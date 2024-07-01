@@ -2,22 +2,22 @@ const knex = require('../config/db');
 
 const Product = {
 	getAll: () => {
-		return knex('products').select('*');
+		return knex('product').select('*');
 	},
 	getById: (id) => {
-		return knex('products').where({ id }).first();
+		return knex('product').where({ id }).first();
 	},
 	getByIds: (ids) => {
-		return knex('products').whereIn('id', ids).select('*');
+		return knex('product').whereIn('id', ids).select('*');
 	},
 	create: (product) => {
-		return knex('products').insert(product).returning('*');
+		return knex('product').insert(product).returning('*');
 	},
 	update: (id, product) => {
-		return knex('products').where({ id }).update(product).returning('*');
+		return knex('product').where({ id }).update(product).returning('*');
 	},
 	delete: (id) => {
-		return knex('products').where({ id }).del();
+		return knex('product').where({ id }).del();
 	},
 };
 
