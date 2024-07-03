@@ -7,6 +7,7 @@ import {
 	Typography,
 	Toolbar,
 	Button,
+	TextField,
 } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
@@ -16,24 +17,48 @@ import customerService from '../../services/customerService';
 const Profile = () => {
 	const { customer, loading, error } = useAuth();
 	const [customerDetails, setCustomerDetails] = useState(null);
+	const [editFields, setEditFields] = useState({
+		name: '',
+		email: '',
+		password: '',
+		profileImage: '',
+	});
 
 	const handleEditProfile = async () => {
 		if (customer && customer.id) {
 			try {
 				const token = customer.token;
-				const edit = await customerService.updateProfile(
-					{ name: 'updated name' },
-					token
-				);
+				const formData = new FormData();
+				formData.append('name', editFields.name || customerDetails.name);
+				formData.append('email', editFields.email || customerDetails.email);
+				if (editFields.password) {
+					formData.append('password', editFields.password);
+				}
+				if (editFields.profileImage) {
+					formData.append('profileImage', editFields.profileImage);
+				}
+				const edit = await customerService.updateProfile(formData, token);
 				console.log(edit);
-				setCustomerDetails((prevDetails) => ({
-					...prevDetails,
-					name: 'updated name',
-				}));
+				setCustomerDetails(edit);
 			} catch (err) {
 				console.error('Failed to edit profile:', err);
 			}
 		}
+	};
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setEditFields((prevFields) => ({
+			...prevFields,
+			[name]: value,
+		}));
+	};
+
+	const handleFileChange = (e) => {
+		setEditFields((prevFields) => ({
+			...prevFields,
+			profileImage: e.target.files[0],
+		}));
 	};
 
 	useEffect(() => {
@@ -105,6 +130,35 @@ const Profile = () => {
 						>
 							{customerDetails?.email || 'Email not available'}
 						</Typography>
+						<TextField
+							label='Name'
+							name='name'
+							value={editFields.name}
+							onChange={handleChange}
+							sx={{ margin: '1rem 0' }}
+						/>
+						<TextField
+							label='Email'
+							name='email'
+							value={editFields.email}
+							onChange={handleChange}
+							sx={{ margin: '1rem 0' }}
+						/>
+						<TextField
+							label='Password'
+							type='password'
+							name='password'
+							value={editFields.password}
+							onChange={handleChange}
+							sx={{ margin: '1rem 0' }}
+						/>
+						<TextField
+							label='Profile Image URL'
+							name='profileImageUrl'
+							value={editFields.profileImage}
+							onChange={handleChange}
+							sx={{ margin: '1rem 0' }}
+						/>
 						<Button
 							variant='contained'
 							color='primary'

@@ -2,22 +2,22 @@ const knex = require('../config/db');
 
 const Customer = {
 	getAll: () => {
-		return knex('customer').select('*');
+		return knex('customers').select('*');
 	},
 	getById: (id) => {
-		return knex('customer').where({ id }).first();
+		return knex('customers').where({ id }).first();
 	},
 	getByEmail: (email) => {
-		return knex('customer').where({ email }).first();
+		return knex('customers').where({ email }).first();
 	},
 	create: (customer) => {
-		return knex('customer').insert(customer).returning('*');
+		return knex('customers').insert(customer).returning('*');
 	},
 	update: (id, customer) => {
-		return knex('customer').where({ id }).update(customer).returning('*');
+		return knex('customers').where({ id }).update(customer).returning('*');
 	},
 	delete: (id) => {
-		return knex('customer').where({ id }).del();
+		return knex('customers').where({ id }).del();
 	},
 };
 

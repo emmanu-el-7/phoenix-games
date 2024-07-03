@@ -78,24 +78,16 @@ const getCurrentCustomer = async (request, h) => {
 };
 
 const update = async (request, h) => {
-	const { name, password } = request.payload;
-	let profileImage = null;
-
-	if (request.file) {
-		profileImage = request.file.filename;
-	}
+	const { name, email, password, profileImage } = request.payload;
 
 	try {
 		const reqCustomer = request.auth.credentials;
 
-		let updatedFields = { name };
+		let updatedFields = { name, email, profile_image: profileImage };
 		if (password) {
 			const salt = await bcrypt.genSalt();
 			const passwordHash = await bcrypt.hash(password, salt);
 			updatedFields.password = passwordHash;
-		}
-		if (profileImage) {
-			updatedFields.profileImage = profileImage;
 		}
 
 		const customer = await Customer.update(reqCustomer.id, updatedFields);

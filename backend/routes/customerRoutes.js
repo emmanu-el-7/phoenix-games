@@ -26,6 +26,12 @@ module.exports = [
 	{
 		method: 'PUT',
 		path: '/update',
+		options: {
+			payload: {
+				parse: true,
+				allow: 'application/json',
+			},
+		},
 		handler: customerController.update,
 	},
 	{
