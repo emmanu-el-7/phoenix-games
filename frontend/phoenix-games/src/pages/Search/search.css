@@ -14,3 +14,24 @@
 	text-align: center;
 	margin: 0.5em 0 2em 0;
 }
+
+.search-results {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	padding: 5px;
+	overflow-y: auto;
+	height: 100vh;
+}
+
+.search-results::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
+.search-card {
+	max-width: 40%;
+	width: 100%;
+	background-color: var(--bgColor);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

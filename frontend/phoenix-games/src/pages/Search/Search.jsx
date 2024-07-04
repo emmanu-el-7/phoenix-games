@@ -53,8 +53,16 @@ const Search = () => {
 		return <div>Error: {error}</div>;
 	}
 
+	const backgroundImageStyle = {
+		backgroundImage:
+			'url(https://images6.alphacoders.com/123/thumb-1920-1233938.jpg)',
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+		backgroundRepeat: 'no-repeat',
+	};
+
 	return (
-		<div className='search-page'>
+		<div className='search-page' style={backgroundImageStyle}>
 			<Toolbar>
 				<Header />
 			</Toolbar>
