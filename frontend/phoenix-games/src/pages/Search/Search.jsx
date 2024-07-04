@@ -9,6 +9,7 @@ import {
 	ListItem,
 	CardMedia,
 	IconButton,
+	Grid,
 } from '@mui/material';
 import Header from '../../components/Menu/Header';
 import productService from '../../services/productService';
@@ -67,70 +68,72 @@ const Search = () => {
 				<Header />
 			</Toolbar>
 			<div className='search-results'>
-				<Card
-					className='product-list'
-					sx={{ borderRadius: '8px', background: 'var(--bgColor)' }}
-				>
-					<CardContent className='card-content'>
-						<Typography
-							variant='h5'
-							component='div'
-							sx={{ color: 'wheat', fontFamily: 'Bauhaus Modern' }}
-						>
-							Resultados da pesquisa
-						</Typography>
-						<List>
-							{products.map((product) => (
-								<ListItem
-									key={product.id}
-									sx={{
-										display: 'flex',
-										alignItems: 'flex-start',
-										gap: '20px',
-										padding: '20px',
-									}}
-								>
-									<CardMedia
-										component='img'
-										image={product.image}
-										alt={product.name}
+				<Grid item xs={12} sm={8} md={6}>
+					<Card
+						className='product-list'
+						sx={{ borderRadius: '8px', background: 'var(--bgColor)' }}
+					>
+						<CardContent className='card-content'>
+							<Typography
+								variant='h5'
+								component='div'
+								sx={{ color: 'wheat', fontFamily: 'Bauhaus Modern' }}
+							>
+								Resultados da pesquisa
+							</Typography>
+							<List>
+								{products.map((product) => (
+									<ListItem
+										key={product.id}
 										sx={{
-											width: 200,
-											height: 200,
-											objectFit: 'fill',
-											borderRadius: '8px',
-											marginBottom: '10px',
+											display: 'flex',
+											alignItems: 'flex-start',
+											gap: '20px',
+											padding: '20px',
 										}}
-									/>
-									<CardContent>
-										<Typography
-											variant='h6'
-											component='div'
-											sx={{ color: 'wheat', fontFamily: 'Poppins' }}
-										>
-											{product.name}
-										</Typography>
-										<Typography
-											variant='body1'
-											component='div'
-											sx={{ color: 'wheat', fontFamily: 'Poppins' }}
-										>
-											R$ {product.price}
-										</Typography>
-										<IconButton
-											className='bag'
-											aria-label='add to cart'
-											onClick={() => addToCart(product)}
-											sx={{ color: 'wheat' }}
-										>
-											<AddShoppingCartIcon />
-										</IconButton>
-									</CardContent>
-								</ListItem>
-							))}
-						</List>
-					</CardContent>
-				</Card>
+									>
+										<CardMedia
+											component='img'
+											image={product.image}
+											alt={product.name}
+											sx={{
+												width: 200,
+												height: 200,
+												objectFit: 'fill',
+												borderRadius: '8px',
+												marginBottom: '10px',
+											}}
+										/>
+										<CardContent>
+											<Typography
+												variant='h6'
+												component='div'
+												sx={{ color: 'wheat', fontFamily: 'Poppins' }}
+											>
+												{product.name}
+											</Typography>
+											<Typography
+												variant='body1'
+												component='div'
+												sx={{ color: 'wheat', fontFamily: 'Poppins' }}
+											>
+												R$ {product.price}
+											</Typography>
+											<IconButton
+												className='bag'
+												aria-label='add to cart'
+												onClick={() => addToCart(product)}
+												sx={{ color: 'wheat' }}
+											>
+												<AddShoppingCartIcon />
+											</IconButton>
+										</CardContent>
+									</ListItem>
+								))}
+							</List>
+						</CardContent>
+					</Card>
+				</Grid>
 			</div>
 		</div>
 	);

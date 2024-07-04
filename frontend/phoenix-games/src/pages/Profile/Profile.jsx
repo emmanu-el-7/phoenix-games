@@ -6,6 +6,7 @@ import {
 	CardContent,
 	Typography,
 	Toolbar,
+	Grid,
 	// Button,
 	// TextField,
 } from '@mui/material';
@@ -100,37 +101,38 @@ const Profile = () => {
 				<Header />
 			</Toolbar>
 			<div className='profile-page'>
-				<Card
-					className='profile-card'
-					sx={{ borderRadius: '8px', marginBottom: '1rem' }}
-				>
-					<CardMedia
-						component='img'
-						image={customerDetails?.image || 'default_image_url'}
-						alt={
-							customerDetails?.image
-								? `${customerDetails.image} pfp`
-								: 'Profile Picture'
-						}
-						className='profile-image'
-						sx={{ borderRadius: '8px 8px 0 0' }}
-					/>
-					<CardContent className='card-content'>
-						<Typography
-							variant='h5'
-							component='div'
-							sx={{ color: 'wheat', fontFamily: 'Bauhaus Modern' }}
-						>
-							{customerDetails?.name || 'Name not available'}
-						</Typography>
-						<Typography
-							variant='h6'
-							component='div'
-							sx={{ color: 'wheat', fontFamily: 'Poppins' }}
-						>
-							{customerDetails?.email || 'Email not available'}
-						</Typography>
-						{/* <TextField
+				<Grid item xs={12} sm={8} md={6}>
+					<Card
+						className='profile-card'
+						sx={{ borderRadius: '8px', marginBottom: '1rem' }}
+					>
+						<CardMedia
+							component='img'
+							image={customerDetails?.image || 'default_image_url'}
+							alt={
+								customerDetails?.image
+									? `${customerDetails.image} pfp`
+									: 'Profile Picture'
+							}
+							className='profile-image'
+							sx={{ borderRadius: '8px 8px 0 0' }}
+						/>
+						<CardContent className='card-content'>
+							<Typography
+								variant='h5'
+								component='div'
+								sx={{ color: 'wheat', fontFamily: 'Bauhaus Modern' }}
+							>
+								{customerDetails?.name || 'Name not available'}
+							</Typography>
+							<Typography
+								variant='h6'
+								component='div'
+								sx={{ color: 'wheat', fontFamily: 'Poppins' }}
+							>
+								{customerDetails?.email || 'Email not available'}
+							</Typography>
+							{/* <TextField
 							label='Name'
 							name='name'
 							value={editFields.name}
@@ -167,8 +169,9 @@ const Profile = () => {
 						>
 							Edit Profile
 						</Button> */}
-					</CardContent>
-				</Card>
+						</CardContent>
+					</Card>
+				</Grid>
 			</div>
 		</div>
 	);

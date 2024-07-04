@@ -29,8 +29,8 @@
 	height: 0;
 }
 
-.search-card {
-	max-width: 40%;
+.product-list {
+	max-width: 50vh;
 	width: 100%;
 	background-color: var(--bgColor);
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
