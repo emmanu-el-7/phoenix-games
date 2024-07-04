@@ -6,60 +6,60 @@ import {
 	CardContent,
 	Typography,
 	Toolbar,
-	Button,
-	TextField,
+	// Button,
+	// TextField,
 } from '@mui/material';
 import { useAuth } from '../../hooks/useAuth';
 import authService from '../../services/authService';
 import Header from '../../components/Menu/Header';
-import customerService from '../../services/customerService';
+// import customerService from '../../services/customerService';
 
 const Profile = () => {
 	const { customer, loading, error } = useAuth();
 	const [customerDetails, setCustomerDetails] = useState(null);
-	const [editFields, setEditFields] = useState({
-		name: '',
-		email: '',
-		password: '',
-		profileImage: '',
-	});
+	// const [editFields, setEditFields] = useState({
+	// 	name: '',
+	// 	email: '',
+	// 	password: '',
+	// 	profileImage: '',
+	// });
 
-	const handleEditProfile = async () => {
-		if (customer && customer.id) {
-			try {
-				const token = customer.token;
-				const formData = new FormData();
-				formData.append('name', editFields.name || customerDetails.name);
-				formData.append('email', editFields.email || customerDetails.email);
-				if (editFields.password) {
-					formData.append('password', editFields.password);
-				}
-				if (editFields.profileImage) {
-					formData.append('profileImage', editFields.profileImage);
-				}
-				const edit = await customerService.updateProfile(formData, token);
-				console.log(edit);
-				setCustomerDetails(edit);
-			} catch (err) {
-				console.error('Failed to edit profile:', err);
-			}
-		}
-	};
+	// const handleEditProfile = async () => {
+	// 	if (customer && customer.id) {
+	// 		try {
+	// 			const token = customer.token;
+	// 			const formData = new FormData();
+	// 			formData.append('name', editFields.name || customerDetails.name);
+	// 			formData.append('email', editFields.email || customerDetails.email);
+	// 			if (editFields.password) {
+	// 				formData.append('password', editFields.password);
+	// 			}
+	// 			if (editFields.profileImage) {
+	// 				formData.append('profileImage', editFields.profileImage);
+	// 			}
+	// 			const edit = await customerService.updateProfile(formData, token);
+	// 			console.log(edit);
+	// 			setCustomerDetails(edit);
+	// 		} catch (err) {
+	// 			console.error('Failed to edit profile:', err);
+	// 		}
+	// 	}
+	// };
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setEditFields((prevFields) => ({
-			...prevFields,
-			[name]: value,
-		}));
-	};
+	// const handleChange = (e) => {
+	// 	const { name, value } = e.target;
+	// 	setEditFields((prevFields) => ({
+	// 		...prevFields,
+	// 		[name]: value,
+	// 	}));
+	// };
 
-	const handleFileChange = (e) => {
-		setEditFields((prevFields) => ({
-			...prevFields,
-			profileImage: e.target.files[0],
-		}));
-	};
+	// const handleFileChange = (e) => {
+	// 	setEditFields((prevFields) => ({
+	// 		...prevFields,
+	// 		profileImage: e.target.files[0],
+	// 	}));
+	// };
 
 	useEffect(() => {
 		const fetchCustomerDetails = async () => {
@@ -106,10 +106,10 @@ const Profile = () => {
 				>
 					<CardMedia
 						component='img'
-						image={customerDetails?.profile_image || 'default_image_url'}
+						image={customerDetails?.image || 'default_image_url'}
 						alt={
-							customerDetails?.profile_image
-								? `${customerDetails.profile_image} pfp`
+							customerDetails?.image
+								? `${customerDetails.image} pfp`
 								: 'Profile Picture'
 						}
 						className='profile-image'
@@ -130,7 +130,7 @@ const Profile = () => {
 						>
 							{customerDetails?.email || 'Email not available'}
 						</Typography>
-						<TextField
+						{/* <TextField
 							label='Name'
 							name='name'
 							value={editFields.name}
@@ -166,7 +166,7 @@ const Profile = () => {
 							sx={{ margin: '1rem' }}
 						>
 							Edit Profile
-						</Button>
+						</Button> */}
 					</CardContent>
 				</Card>
 			</div>

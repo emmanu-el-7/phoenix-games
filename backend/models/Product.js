@@ -19,6 +19,9 @@ const Product = {
 	delete: (id) => {
 		return knex('products').where({ id }).del();
 	},
+	searchByName: (name) => {
+		return knex('products').where('name', 'ilike', `%${name}%`).select('*');
+	},
 };
 
 module.exports = Product;

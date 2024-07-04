@@ -57,15 +57,18 @@ const deleteProduct = async (request, h) => {
 	}
 };
 
-const searchProducts = async (req, res) => {
-	const { q } = req.query;
+const searchProducts = async (request, h) => {
+	const { q } = request.query;
+
+	console.log(`Search query: ${q}`);
 
 	try {
-		const products = await Product.find({ title: new RegExp(q, 'i') }).exec();
-		res.status(200).json(products);
+		const products = await Product.searchByName(q);
+		console.log(`Found products: ${JSON.stringify(products)}`);
+		return h.response(products).code(200);
 	} catch (error) {
 		console.error('Error searching products:', error);
-		res.status(500).json({ error: 'Internal server error' });
+		return h.response({ message: 'Internal server error' }).code(500);
 	}
 };
 

@@ -60,16 +60,15 @@ const deleteProduct = async (id, token) => {
 
 const searchProducts = async (query) => {
 	try {
-		const res = await fetch(`/api/search?q=${query}`);
+		const res = await fetch(`${api}/search?q=${query}`);
 		if (!res.ok) {
-			if (res.headers.get('content-type')?.includes('text/html')) {
-				const errorText = await res.text();
-				console.error('Error searching products:', errorText);
-			} else {
-				throw new Error(`Error: ${res.status}`);
-			}
+			const errorText = await res.text();
+			console.error('Error searching products:', errorText);
+			throw new Error(`Error: ${res.status}`);
 		}
-		return await res.json();
+		const data = await res.json();
+		console.log('Fetched products:', data);
+		return Array.isArray(data) ? data : [data];
 	} catch (error) {
 		console.error('Error searching products:', error);
 		throw error;
