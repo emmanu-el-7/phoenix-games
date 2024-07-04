@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductCarousel from './ProductCarousel';
 import productService from '../../services/productService';
+import { Grid } from '@mui/material';
 
 const ProductsContainer = () => {
 	const [products, setProducts] = useState([]);
@@ -32,7 +33,9 @@ const ProductsContainer = () => {
 
 	return (
 		<div>
-			<ProductCarousel products={products} />
+			<Grid item xs={12} sm={8} md={6}>
+				<ProductCarousel products={products} />
+			</Grid>
 		</div>
 	);
 };
